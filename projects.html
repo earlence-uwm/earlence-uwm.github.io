@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#tabs").tabs({
+                activate: function (evt, ui) {
+                    //
+                    selected = ui.newTab.index();
+                    $("#plist" + selected).parent().siblings().children().removeClass('active');
+                    $("#plist" + selected).addClass('active');
+                }
+            });
+        });
+
+        $("#tabs div").click(function () {
+            $(this).parent().addClass('active').siblings().removeClass('active');
+            console.log('etete');
+        });
+
+
+    </script>
+    <title>Projects | Earlence Fernandes </title>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                Earlence Fernandes
+            </div>
+
+            <div class="navigation">
+                <nav>
+                    <ul class="navigation__list">
+                        <li class="navigation__item">
+                            <a href="index.html" class="navigation__link">Home</a>
+                        </li>
+                        <li class="navigation__item">
+                            <a href="publications.html" class="navigation__link">Publications</a>
+                        </li>
+                        <li class="navigation__item">
+                            <a href="invited_talks.html" class="navigation__link">Invited talks</a>
+                        </li>
+                        <li class="navigation__item">
+                            <a href="projects.html" class="navigation__link--active">Projects</a>
+                        </li>
+                        <li class="navigation__item">
+                            <a href="academic_service.html" class="navigation__link">Academic service</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+        </header>
+
+        <div class="bottom-margin-md"></div>
+        <div id="tabs">
+
+            <div class="project--row">
+                <div class="row--2">
+                    <div id="tabs-1">
+                        <div class="title">Security Analysis of Emerging Smart Home Applications</div>
+                        <div class="quote">An analysis focused on security design of IoT platforms, findings include overprivilege and insufficient
+                            event protection</div>
+                        <div class="article">
+                            <div class="subtitle">Summary</div>
+                            <p>We performed the first in-depth empirical security analysis of a popular emerging smart home
+                                programming platform---
+                                <a href="https://www.smartthings.com/" target="_blank">Samsung SmartThings.</a>
+                                We evaluated the platform's security design, and coupled that with an analysis of 499 SmartThings apps (also called
+                                <a href="http://docs.smartthings.com/en/latest/smartapp-developers-guide/index.html" target="_blank">SmartApps</a>) and 132 device handlers using static code analysis tools that we built.
+                            </p>
+
+                            <div class="subtitle">FAQ</div>
+
+                            <p>
+                                <b>What are your key findings?</b>
+                                <br>Our key findings are twofold. First, although SmartThings implements a privilege separation
+                                model, we found that SmartApps can be overprivileged. That is, SmartApps can gain access
+                                to more operations on devices than their functionality requires. Second, the SmartThings
+                                event subsystem, which devices use to communicate asynchronously with SmartApps via events,
+                                does not sufficiently protect events that carry sensitive information such as lock pincodes.
+                            </p>
+
+                            <p>
+                                <b>Why SmartThings?</b>
+                                <br>Recently, several competing smart home programming frameworks that support third party app
+                                development have emerged. These frameworks provide tangible benefits to users, but can also
+                                expose users to significant security risks. We analyzed Samsung-owned SmartThings because
+                                it has the largest number of apps among currently available smart home platforms, and supports
+                                a broad range of devices including motion sensors, fire alarms, and door locks.</p>
+
+                            <p>
+                                <b>Can you explain overprivilege, and what you found specifically for SmartThings?</b>
+                                <br>Overprivilege is a security design flaw wherein an app gains access to more operations on
+                                protected resources than it requires to complete its claimed functionality. For instance,
+                                a battery manager app only needs access to read battery levels of devices. However, if this
+                                app can also issue operations to control the on/off status of those devices, that would be
+                                overprivilege. We found two forms of overprivilege for SmartThings. First, coarse-grained
+                                capabilities lead to over 55% of existing SmartApps to be overprivileged. Second, coarse
+                                SmartApp-SmartDevice binding leads to SmartApps gaining access to operations they did not
+                                explicitly ask for. Our analysis reveals that 42% of existing SmartApps are overprivileged
+                                in this way.
+                            </p>
+                            <p>
+                                <b>How can attackers exploit these design flaws?</b>
+                                <br>We exploited framework design flaws to construct four proof-of-concept attacks that: (1)
+                                secretly planted door lock codes; (2) stole existing door lock codes; (3) disabled vacation
+                                mode of the home; and (4) induced a fake fire alarm. Details on how these attacks work are
+                                in our research paper linked below.
+                            </p>
+
+                            <div class="subtitle">Code & Tools</div>
+
+                            <p class="p-pro">We have made three programming resources available on
+                                <a href="https://github.com/earlence/SmartThingsAnalysisTools" target="_blank">GitHub</a>:
+                                <li>Static analysis tool that computes overprivilege in SmartApps.</li>
+                                <li>Python script that automatically creates skeleton device handlers inside the SmartThings
+                                    IDE.
+                                </li>
+                                <li>Capability documentation that we used in our analysis.</li>
+                                <div class="button">
+                                    <a href="https://github.com/earlence/SmartThingsAnalysisTools" target="_blank">
+                                        <button class="btn">Tools on Github</button>
+                                    </a>
+                                </div>
+                            </p>
+
+                            <div class="subtitle">Research Paper</div>
+                            Our paper appeared at
+                            <b>IEEE S&P 2016 ("Oakland")</b> and received
+                            <span>Distinguished Practical Paper Award</span>.
+                            <div class="button">
+                                <a href="assets/papers/smartthings_sp16.pdf" target="_blank">
+                                    <button class="btn">Download Paper</button>
+                                </a>
+                            </div>
+
+
+                            <p class="p-pro">when refering to out work, please cite it as:
+                                <div class="citation">
+                                    <pre>
+Earlence Fernandes, Jaeyeon Jung, and Atul Prakash
+Security Analysis of Emerging Smart Home Applications
+In Proceedings of 37th IEEE Symposium on Security and Privacy, May 2016    
+                                </div>
+                                or, use BitTex for citation:
+                                <div class="citation"><pre>
+@InProceedings{smartthings16,
+    author = {Earlence Fernandes and Jaeyeon Jung and Atul Prakash},
+    title = {{S}ecurity {A}nalysis of {E}merging {S}mart {H}ome {A}pplications},
+    booktitle = {Proceedings of the 37th {IEEE} Symposium on Security and Privacy},
+    month = May,
+    year = 2016
+}
+                               </div>
+                            </p>
+                            <div class="subtitle">Attack Demos</div>
+                            
+                            <h4>Pincode Snooping</h4>
+                            <iframe width="854" height="480" src="https://www.youtube.com/embed/x6NGAXMKDAY?rel=0" frameborder="0" allowfullscreen></iframe>
+                            
+            
+                            <h4>Backdoor Pincode Injection</h4>
+                            <iframe width="854" height="480" src="https://www.youtube.com/embed/bF3m3eJvsNo?rel=0" frameborder="0" allowfullscreen></iframe>
+
+            
+                            <h4>Disabling Vacation Mode</h4>
+                            <iframe width="854" height="480" src="https://www.youtube.com/embed/ahepnoiIK7o?rel=0" frameborder="0" allowfullscreen></iframe>
+                     
+            
+                            <h4>Fake Fire Alarm</h4>
+                            <iframe width="854" height="480" src="https://www.youtube.com/embed/RnGcrOixzbI?rel=0" frameborder="0" allowfullscreen></iframe>
+                            <p></p>
+                            
+                            <div class="subtitle">Media Coverage</div>
+                                <a href="https://www.wired.com/2016/05/flaws-samsungs-smart-home-let-hackers-unlock-doors-set-off-fire-alarms/" target="_blank">Wired</a>,
+                                <a href="https://www.schneier.com/blog/archives/2016/05/vulnerabilities_5.html" target="_blank">Schneier on Security</a>,
+                                <a href="http://www.theverge.com/2016/5/2/11540246/samsung-smart-things-security-study-critical-flaw-apps" target="_blank">The Verge</a>,
+                                <a href="http://gizmodo.com/samsungs-smart-home-gadgets-are-full-of-security-holes-1774215692" target="_blank">Gizmodo</a>,
+                                <a href="http://arstechnica.com/security/2016/05/samsung-smart-home-flaws-lets-hackers-make-keys-to-front-door/" target="_blank">Ars Technica</a>,
+                                <a href="http://www.cnet.com/news/security-researchers-warn-of-key-iot-vulnerabilities-in-samsung-smartthings-platform/" target="_blank">CNET</a>,
+                                <a href="http://mashable.com/2016/05/02/smartthings-hack/#TK_M7YmjDPqG" target="_blank">Mashable</a>,
+                                <a href="http://www.freep.com/story/money/business/2016/05/02/u-m-experts-smart-home-platform-not-so-intelligent/83837656/" target="_blank">Detroit Free Press</a>,
+                                <a href="http://www.zdnet.com/article/researcher-uncovers-samsung-smartthings-connected-home-security-flaws/" target="_blank">ZDNet</a>,
+                                <a href="https://www.yahoo.com/tech/u-michigan-microsoft-researchers-whether-220911913.html" target="_blank">Yahoo News</a>,
+                                <a href="http://www.techtimes.com/articles/155433/20160502/researcher-find-security-issues-samsung-s-smartthings-report-shows-6.htm" target="_blank">Tech Times</a>,
+                                <a href="https://www.reddit.com/r/SmartThings/comments/4hhrc8/flaws_in_samsungs_smart_home_let_hackers_unlock/" target="_blank">Reddit</a>,                     
+                                <a href="http://gadgets.ndtv.com/internet/news/samsung-smartthings-vulnerability-lets-attackers-access-your-devices-fix-released-833120" target="_blank">NDTV</a>,
+                                <a href="http://www.scmagazine.com/vulnerability-in-connected-home-systems-lets-researchers-unlock-doors/article/493766/" target="_blank">SC Magazine</a>,
+                                <a href="http://www.techhive.com/article/3064372/home-tech/samsung-smartthings-vulnerability-lets-hackers-make-their-own-house-keys.html" target="_blank">TechHive</a>,
+                                <a href="http://www.worldtechtoday.com/2016/05/02/30194/are-smart-door-locks-a-dumb-idea.html" target="_blank">WorldTechToday</a>,
+                                <a href="http://www.popularmechanics.com/technology/security/a20675/smart-home-smarthings-locks-hacked-samsung/" target="_blank">Popular Mechanics</a>,
+                                <a href="http://www.gearbrain.com/hackers-samsung-smartthing-1770659655.html" target="_blank">GearBrain</a>,
+                                <a href="http://phys.org/news/2016-05-smart-home-flaws-popular.html" target="_blank">Phys.org</a>,
+                                <a href="http://9to5google.com/2016/05/02/samsung-smartthings-vulnerabilities/" target="_blank">9to5google.com</a>,
+                                <a href="http://www.networkworld.com/article/3064296/security/researchers-take-aim-at-smartthings-security-develop-4-proof-of-concept-attacks.html" target="_blank">NetworkWorld</a>,
+                                <a href="http://mobilesyrup.com/2016/05/02/samsungs-iot-smartthings-platform-suffers-from-serious-security-issues-says-report/" target="_blank">mobilesyrup</a>,
+                                <a href="http://www.myce.com/news/security-issues-samsungs-smart-home-platform-allows-hackers-open-locks-79303/" target="_blank">myce</a>,
+                                <a href="http://bestthenews.com/article/researcher-find-security-issues-samsungs-smartthings-while-report-shows-6-10-internet-users" target="_blank">BestTheNews</a>,
+                                <a href="http://www.androidheadlines.com/2016/05/study-reveals-security-issues-with-samsungs-smartthings.html" target="_blank">Android Headlines</a>,
+                                <a href="http://tech.citynewsline.com/news/researchers-take-aim-at-smartthings-security-develop-4-proofofconcept-attacks" target="_blank">CityNewsLine</a>,
+                                <a href="http://newsbout.com/id/16231555708/Researchers-take-aim-at-SmartThings-security-develop-4-proof-of-concept-attacks" target="_blank">NewsAbout.com</a>,
+                                <a href="http://www.toptechnews.com/article/index.php?story_id=002000293B6G" target="_blank">Top Tech News</a>,
+                                <a href="http://www.newsfactor.com/story.xhtml?story_id=002000868HQW" target="_blank">News Factor</a>,
+                                <a href="https://isc.sans.edu/forums/news/Samsung+Smart+Home+flaws+let+hackers+make+keys+to+front+door/976587/" target="_blank">SANS ISC InfoSec </a>,
+                                <a href="http://www.sammobile.com/2016/05/03/samsungs-smartthings-connected-home-platform-seems-to-have-serious-security-issues/" target="_blank">Sammobile</a>,
+                                <a href="http://www.theinquirer.net/inquirer/news/2456722/samsung-smartthings-vulnerabilities-could-let-hackers-into-your-home" target="_blank">The Inquirer</a>,
+                                <a href="http://www.live-smart.co/smart-home/researchers-hacked-samsung-smartthings-7571" target="_blank">Live Smart</a>,
+                                <a href="http://www.mobilescout.com/samsung/news/n67275/Security-concerns-plague-Samsung-SmartThings.html" target="_blank">Mobile Scout</a>,
+                                <a href="http://www.engin.umich.edu/college/about/news/stories/2016/may/hacking-into-homes" target="_blank">Michigan Engineering</a>,
+                                <a href="http://www.digitaltrends.com/home/smart-home-safety/" target="_blank">Digital Trends</a>,
+                                <a href="https://www.techdirt.com/articles/20160502/07145334322/samsung-smartthings-platform-latest-to-highlight-internet-things-security-is-joke.shtml" target="_blank">TechDirt</a>,
+                                <a href="http://techomebuilder.com/emagazine-articles-1/samsung-smartthings-hackers-set-off-alarm-unlock-doors" target="_blank">TecHomeBuilder</a>,
+                                <a href="http://abcnews.go.com/Technology/video/vulnerabilities-discovered-samsungs-smart-home-platform-38834995" target="_blank">ABCNews</a>,
+                                <a href="http://www.businessinsider.com/samsung-smartthings-platform-iot-security-issues-internet-of-things-2016-5" target="_blank">Business Insider</a>,
+                                <a href="http://eandt.theiet.org/news/2016/may/smart-home-cyber-attack.cfm" target="_blank">E&T</a>,
+                                <a href="http://www.neowin.net/news/flaws-found-in-samsungs-smartthings-platform-give-attackers-access-to-your-home" target="_blank">Neowin</a>,
+                                <a href="http://www.business-standard.com/article/news-ians/indian-origin-scientist-hacks-into-popular-smart-home-security-116050300788_1.html" target="_blank">Business Standard</a>,
+                                <a href="http://www.securitysales.com/article/serious_security_flaws_found_in_samsung_smartthings_platform/news" target="_blank">Security Sales</a>,
+                                <a href="http://www.eweek.com/networking/slideshows/why-samsungs-smartthings-home-controller-is-under-fire.html" target="_blank">eWeek</a>,
+                                <a href="http://news.softpedia.com/news/samsung-smart-home-platform-exposes-door-lock-codes-503643.shtml" target="_blank">Softpedia</a>,
+                                <a href="http://hothardware.com/news/researchers-ravage-samsung-smartthings-hub-exploitable-locks" target="_blank">HotHardware</a>,
+                                <a href="http://www.techspot.com/news/64672-samsung-patches-smart-home-platform-after-researchers-expose.html" target="_blank">TechSpot</a>,
+                                <a href="http://www.morningnewsusa.com/watch-u-m-researchers-reveal-flaws-of-samsung-smart-home-2375412.html" target="_blank">Morning News USA</a>,
+                                <a href="http://www.digitalspy.com/tech/news/a792739/hackers-take-control-of-samsung-smart-home-system/" target="_blank">Digital Spy</a>,
+                                <a href="http://betanews.com/2016/05/04/samsung-has-a-smartthings-security-problem-according-to-um-and-microsoft-research/" target="_blank">Betanews</a>,
+                                <a href="http://www.iothub.com.au/news/researchers-expose-flaws-in-smartthings-platform-419001" target="_blank">IoTHub</a>,
+                                <a href="http://www.hiddenwires.co.uk/news/article/new-study-highlights-vulnerabilities-in-samsung-s-smartthings-platform" target="_blank">hiddenwires</a>,
+                                <a href="https://thestack.com/security/2016/05/03/samsungs-smartthings-system-has-massive-vulnerabilities/" target="_blank">The Stack</a>,
+                                <a href="http://www.technewsworld.com/story/83461.html" target="_blank">Tech News World </a>,
+                                <a href="http://www.securityweek.com/smartthings-flaws-expose-smart-homes-hacker-attacks" target="_blank">Security Week</a>,
+                                <a href="http://www.ibtimes.co.uk/samsung-smart-home-system-found-vulnerable-hacking-1557973" target="_blank">International Business Times</a>,
+                                <a href="http://www.theregister.co.uk/2016/05/02/samsung_smartthings_security/" target="_blank">The Register</a>,
+                                <a href="https://www.sans.org/newsletters/newsbites/xviii/35#202" target="_blank">SANS Institute</a>,
+                                <a href="http://www.techrepublic.com/article/security-researchers-smart-home-platform-findings-may-keep-you-up-at-night/" target="_blank">Tech Republic</a>
+                                <p><b>Radio Coverage</b>
+                                    <a href="http://detroit.cbslocal.com/station/wwj-newsradio-950/" target="_blank">WWJ Newsradio 950</a>, 
+                                    <a href="http://www.charlestendell.com" target="_blank">Hacked! The Charles Tendell Show (Live) </a>
+                                </p>
+                                <p>
+                                    <b>Here is an <a href="https://theconversation.com/security-risks-in-the-age-of-smart-homes-58756" target="_blank">article</a> for "The Conversation" that explains our research findings to the general reader.</b>
+                                </p>
+
+
+
+                            <div class="subtitle">Vendor Statement</div>
+                                <p><a href="https://community.smartthings.com/t/smartthings-platform-security-response-from-alex/46878" target="_blank">Alex Hawkinson, Founder, CEO of SmartThings</a></p>
+
+                           <!-- <div class="subtitle">Team</div>
+                                <p>
+                                    <a href="http://web.eecs.umich.edu/~earlence/" target="_blank">Earlence Fernandes</a><br>
+                                    <a href="https://www.linkedin.com/in/jaeyeonjung/" target="_blank" >Jaeyeon Jung</a><br>
+                                    <a href="http://web.eecs.umich.edu/~aprakash/" target="_blank">Atul Prakash</a>
+                                </p>
+
+                            -->
+                            <div class="subtitle">Acknowledgements</div>
+                                <p>
+                                    <a  href="https://www.umich.edu/" target="_blank">University of Michigan</a><br>
+                                    <a href="https://www.microsoft.com/en-us/research/" target="_blank" >Microsoft Research</a><br>
+                                    <a href="https://www.nsf.gov/" target="_blank">National Science Foundation</a>
+                                </p>                     
+                        </div>
+                    </div>
+                    <div id="tabs-2">
+                            <div class="title">Robust Physical-World Attacks on Deep Learning Visual Classification
+                                </div>
+                                <div class="quote">Can real physical objects be manipulated in ways that cause DNN-based classifiers to misclassify them?</div>
+                                <div class="article">
+                                <div class="subtitle">Summary</div>  
+                                <p>Although deep neural networks (DNNs) perform well in a variety of applications, they are vulnerable to adversarial examples resulting from small-magnitude perturbations added to the input data. Inputs modified in this way can be mislabeled as a target class in targeted attacks or as a random class different from the ground truth in untargeted attacks. However, recent studies have demonstrated that such adversarial examples have limited effectiveness in the physical world due to changing physical conditions—they either completely fail to cause misclassification or only work in restricted cases where a relatively complex image is perturbed and printed on paper. In this paper, we propose a general attack algorithm—Robust Physical Perturbations (RP2)— that takes into account the numerous physical conditions and produces robust adversarial perturbations. Using a real-world example of road sign recognition, we show that adversarial examples generated using RP2 achieve high attack success rates in the physical world under a variety of conditions, including different viewpoints. Furthermore, to the best of our knowledge, there is currently no standardized way to evaluate physical adversarial perturbations. Therefore, we propose a two-stage evaluation methodology and tailor it to the road sign recognition use case. Our methodology captures a range of diverse physical conditions, including those encountered when images are captured from moving vehicles. We evaluate our physical attacks using this methodology and effectively fool two road sign classifiers. Using a perturbation in the shape of black and white stickers, we attack a real Stop sign, causing targeted misclassification in 100% of the images obtained in controlled lab settings and above 84% of the captured video frames obtained on a moving vehicle for one of the classifiers we attack.
+                                </p>
+
+                                <div class="subtitle">FAQ</div>
+                                <p>
+                                    <b>Did you attack a real self-driving car?</b>
+                                    <br>No.
+                                </p>
+                                <p>
+                                    <b>Okay, what did you attack?</b>
+                                    <br>We attacked a deep neural network-based classifier for U.S. road signs. A classifier is a neural network (in the context of our work) that interprets road signs. A car would potentially use a camera to take pictures of road signs, crop them, and then feed them into a road sign classifier. We did not attack object detectors -- a different type of machine learning model that analyzes an image of the entire scene and detects the signs and their labels without cropping. Object detection is a very different machine learning problem and presents different challenges for attackers.
+                                </p>
+                                <p>
+                                    To the best of our knowledge, there is currently no publicly available classifier for U.S. road signs. Therefore, we trained a network on the LISA dataset, a U.S. sign dataset comprised of different road signs like Stop, Speed Limit, Yield, Right Turn, Left Turn, etc. This model consists of three convolutional layers followed by a fully connected layer and was originally developed as part of the <a href="https://github.com/tensorflow/cleverhans">Cleverhans</a> library. Our final classifier accuracy was 91% on the test dataset.
+                                </p>
+    
+                                <p>
+                                    <b>What are your findings?</b>
+                                    <br>We show that it is possible to construct physical modifications to road signs, in ways that cause the trained classifier (discussed above) to misinterpret the meaning of the signs. For example, we were able to trick the classifier into interpreting a Stop sign as a Speed Limit 45 sign, and a Turn Right sign as either a Stop or Added Lane sign. Our physical modifications for a real Stop sign are a set of black and white stickers. See the resources section below for examples.
+                                </p>
+                                <p>
+                                    <b>What resources does an attacker need?</b>
+                                    <br>An attacker needs a color printer for sticker attacks, and a poster printer for poster-printing attacks. The attacker would also need a camera to take an image of the sign he wishes to attack.
+                                </p>
+                                <p>
+                                    <b>Who is a casual observer and why do these modifications to road signs not raise suspicion?</b>
+                                    <br>A casual observer is anyone in the street or in vehicles. Our algorithm produces perturbations that look like graffiti. As graffiti is commonly seen on road signs, it is unlikely that casual observers would suspect that anything is amiss.
+                                </p>
+                                <p>
+                                    <b>Based on this work, are current self-driving cars at risk?</b>
+                                    <br>No. We did not attack a real self-driving car. However, our work does serve to highlight potential issues that future self-driving car algorithms might have to address. A more complete attack on a self-driving car would have to target the entire control pipeline that includes many more steps in addition to classification. One such part of the pipeline, which is out of the scope of our work,  is the detection of objects, that is the identification of the region of an image taken by a car camera where some type of road sign is to be found. We focus our efforts on attacking classifiers using physical object modifications. We focus on classifiers because they are commonly studied in the context of doing research on adversarial examples. Although it is unlikely that our attacks on classifiers would attack detectors “out of the box,” it is highly possible that future work will examine and find robust attacks on object detectors, in a similar vein to our work on attacking classifiers.
+                                </p>
+
+                                <p>
+                                    <b>Should I stop using the autonomous features (parking, freeway driving) of my car? Or is there any immediate concern?</b>
+                                    <br>We again stress that our attack was crafted for the trained neural network discussed above. As it stands today, this attack would most likely not work as-is on existing self-driving cars.
+                                </p>
+
+                                <p>
+                                    <b>By revealing this vulnerability, aren't you helping potential hackers?</b>
+                                    <br>No, on the contrary, we are helping manufacturers and users to address potential problems before hackers can take advantage. As computer security researchers, we are interested in identifying the security risks of emerging technologies, with the goal of helping improve the security of future versions of those technologies.
+                                </p>
+                                <p>
+                                        The security research community has found that evaluating the security risks of a new developing technology makes it much easier to confront and address security problems before adversarial pressure manifests. One example has been the modern automobile and another, the modern smart home. In both cases, there is progress toward better security. We hope that our results start a fruitful conversation on securing cyber-physical systems that use neural nets for making important control decisions.
+                                </p>
+                                <p>
+                                    <b>Are you doing demos or interviews?</b>
+                                    <br>As our work is in progress, we are currently focused on improving and fine-tuning the scientific techniques behind our initial results. We created this FAQ in response to the unanticipated media interest and to answer questions that have arisen in the meantime. In the future, we may upload video demonstrations of the attack, and may accept interview invitations. For the time being, we have uploaded our experimental attack images on this website.
+                                </p>
+                                <p>
+                                    <b>Whom should we contact if we have more questions?</b>
+                                    <br>We are a team of researchers at various institutions. Please see below for a list of team members and institutions involved in the project. In order to streamline communication, we have created an alias that reaches all team members. We strongly recommend that you contact <a href="mailto:roadsigns@umich.edu">roadsigns@umich.edu</a> if you have further questions.
+                                </p>
+
+
+
+                                <div class="subtitle">Example Drive-By Test Video</div>
+    
+                                <h4>Abstract Art Attack on LISA-CNN</h4>
+                                    <p class="p-pro">
+                                        The left-hand side is a video of a perturbed Stop sign, the right-hand side is a video of a clean Stop sign. The classifier (LISA-CNN) detects the perturbed sign as Speed Limit 45 until the car is very close to the sign. At that point, it is too late for the car to reliably stop. The subtitles show the LISA-CNN classifier output.
+                                    </p>
+
+                                <iframe width="854" height="480" src="https://www.youtube.com/embed/1mJMPqi2bSQ" frameborder="0" allowfullscreen></iframe>
+                                
+                                <h4>Subtle Poster Attack on LISA-CNN</h4>
+                                    <p class="p-pro">
+                                         The left-hand side is a video of a true-sized Stop sign printout (poster paper) with perturbations covering the entire surface area of the sign. The classifier (LISA-CNN) detects this perturbed sign as a Speed Limit 45 sign in all tested frames. The right-hand side is the baseline (a clean poster-printed Stop sign). The subtitles show LISA-CNN output.                                    
+                                    </p>
+                                <iframe width="854" height="480" src="https://www.youtube.com/embed/xwKpX-5Q98o" frameborder="0" allowfullscreen></iframe>
+                                <p></p>
+
+
+                                <div class="subtitle">Code & Tools</div>
+
+                                
+                                       
+                                        <div class="button">
+                                            <a href="https://github.com/evtimovi/robust_physical_perturbations" target="_blank">
+                                                <button class="btn">Attack Code on GitHub</button>
+                                            </a>
+                                        </div>
+                                    
+                                <p>
+                                        We have made a sampling of our experimental attack images available as a zip file (around 25MB). Click <a href="img/experimental_attack_images.zip">here</a> to download.
+                                        <a href="https://drive.google.com/drive/folders/1DbsJtE6KT3J15TzcCoVrvoHeCVHhSxtc?usp=sharing">Google Drive</a> link to datasets we used in our attacks (validation set for attack on a coffee mug, victim set for the coffee mug attack, US stop signs for validation, etc).
+                                
+                                </p>
+
+
+
+
+                                <div class="subtitle">Research Paper</div>
+                                <div class="button">
+                                        <a href="https://arxiv.org/pdf/1707.08945.pdf" target="_blank">
+                                            <button class="btn">Download Paper</button>
+                                        </a>
+                                    </div>
+        
+        
+                                    <p class="p-pro">when refering to out work, please cite it as:
+                                    <div class="citation"><pre>
+Kevin Eykholt, Ivan Evtimov, Earlence Fernandes, Bo Li, Amir Rahmati, Chaowei Xiao, Atul Prakash, Tadayoshi Kohno, Dawn Song
+Robust Physical-World Attacks on Deep Learning Visual Classification
+Computer Vision and Pattern Recognition (CVPR 2018) (supersedes arXiv preprint 1707.08945, August 2017)   
+                                    </div>
+                                        or, use BitTex for citation:
+                                        <div class="citation"><pre>
+@InProceedings{roadsigns17,
+   author = {Kevin Eykholt and Ivan Evtimov and Earlence Fernandes and Bo Li and Amir Rahmati and Chaowei Xiao 
+    and Atul Prakash and Tadayoshi Kohno and Dawn Song},
+   title = {{Robust Physical-World Attacks on Deep Learning Visual Classification}},
+   booktitle = {Computer Vision and Pattern Recognition (CVPR)},
+   month = June,
+   year = 2018
+}                                       </div>
+                                    </p>
+    
+                                
+                                
+                                <div class="subtitle">Acknowledgements</div>
+                                <p>
+                                        <a  href="https://www.umich.edu/" target="_blank">University of Michigan</a><br>
+                                        <a  href="https://www.washington.edu/" target="_blank">University of Washington</a><br>
+                                        <a  href="https://www.berkeley.edu/" target="_blank">University of California, Berkeley</a><br>
+                                        <a  href="https://www.stonybrook.edu/" target="_blank">Stony Brook University</a><br>
+                                        <a href="https://www.nsf.gov/" target="_blank">National Science Foundation</a>
+                                </p>  
+    
+                            </div>
+                    </div>
+                    <div id="tabs-3">
+                            <div class="title">Object Detector Attacks: Physical Adversarial Examples for Object Detectors
+                            </div>
+                            <div class="quote">Physical Adversarial Examples for state-of-the-art object detectors</div>
+                            <div class="article">
+                            <div class="subtitle">Summary</div>  
+                            <p>Deep neural networks (DNNs) have enabled great progress in a variety of application areas, including image processing, text analysis, and speech recognition. DNNs are being incorporated as an important component in many cyber-physical systems. For instance, the vision system of a self-driving car can take advantage of DNNs to better recognize pedestrians, vehicles, and road signs. However, recent research has shown that DNNs are vulnerable to adversarial examples: Adding carefully crafted adversarial perturbations to the inputs can mislead the target classifier into mislabeling them during run time. Such adversarial examples raise security and safety concerns when applying DNNs in the real world. For example, adversarially perturbed inputs could mislead the perceptual systems of an autonomous vehicle into misclassifying street signs, with potentially catastrophic consequences. To better understand these vulnerabilities, there has been extensive research on how adversarial examples may affect DNNs deployed in the physical world.</p>
+                            <p>Our recent work <a href="https://arxiv.org/abs/1707.08945" target="_blank">Robust physical-world attacks on deep learning models</a> has shown physical attacks on classifiers. As the next logical step, we show attacks on object detectors. These computer vision algorithms identify relevant objects in a scene and predict bounding boxes indicating objects’ position and kind. Compared with classifiers, detectors are more challenging to fool as they process the entire image and can use contextual information (e.g. the orientation and position of the target object in the scene) in their predictions.</p>
+                            <p>We demonstrate physical adversarial examples against the <a href="https://pjreddie.com/darknet/yolo/" target="_blank">YOLO</a> detector, a popular state-of-the-art algorithm with good real-time performance. Our examples take the form of sticker perturbations that we apply to a real STOP sign. The following image shows our example physical adversarial perturbation.</p>
+                            <img class="img-pro" src="assets/images/image1.png" target="_blank">
+                            
+                            <p>We also perform dynamic tests by recording a video to test out the detection performance.
+                                    As can be seen in the video, the YOLO network does not perceive the STOP sign in almost all the frames. If a real autonomous vehicle were driving down the road with such an adversarial STOP sign, it would not see the STOP, possibly leading to a crash at an intersection. The perturbation we created is robust to changing distances and angles -- the most commonly changing factors in a self-driving scenario.</p>
+
+                            <p>More interestingly, the physical adversarial examples generated for the YOLO detector are also be able to fool standard Faster-RCNN. The video contains a dynamic test of the physical adversarial example on <a href="https://github.com/endernewton/tf-faster-rcnn" target="_blank">Faster-RCNN</a>. As this is a black box attack on Faster-RCNN, the attack is not as successful as it is in the YOLO case. This is expected behavior. We believe that with additional techniques (such as ensemble training), the black box attack could be made more effective. Additionally, specially optimizing an attack for Faster-RCNN will yield better results. We are currently working on a paper that explores these attacks in more detail. The image below is an example of Faster-RCNN not perceiving the Stop sign.</p>
+                            <img class="img-pro" src="assets/images/image2.png" target="_blank">
+                            
+                            <p>In both cases (YOLO and Faster-RCNN), a stop sign is detected only when the camera is very close to the sign (about 3 to 4 feet away). In real settings, this distance is too close for a vehicle to take effective corrective action. Stay tuned for our upcoming paper that contains more details about the algorithm and results of physical perturbations against state-of-the-art object detectors.</p>
+
+                            
+                            <div class="subtitle">Attack Demos</div>
+
+                            <h4>Physical Adversarial Sticker Perturbations for YOLO</h4>
+                            <iframe width="854" height="480" src="https://www.youtube.com/embed/gkKyBmULVvM?cc_load_policy=1" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+
+                            <h4>Physical Adversarial Examples for YOLO (2)</h4>
+                            <iframe width="854" height="480" src="https://www.youtube.com/embed/zSFZyzHdTO0?cc_load_policy=1" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+
+                            <h4>Black box transfer to Faster RCNN of physical adversarial examples generated for YOLO</h4>
+                            <iframe width="854" height="480" src="https://www.youtube.com/embed/_ynduxh4uww?cc_load_policy=1" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+                            <p></p>
+
+
+                            <div class="subtitle">Short Note on arXiv</div>
+                            <div class="button">
+                                    <a href="https://arxiv.org/abs/1712.08062" target="_blank">
+                                        <button class="btn">Download PDF</button>
+                                    </a>
+                                </div>
+    
+    
+                               <!-- <p class="p-pro">when refering to out work, please cite it as:
+                                <div class="citation"><pre>
+Earlence Fernandes, Justin Paupore, Amir Rahmati, Daniel Simionato, Mauro Conti, and Atul Prakash 
+FlowFence: Practical Data Protection for Emerging IoT Application Frameworks
+In Proceedings of the 25th USENIX Security Symposium, August 2016   
+                                </div>
+                                    or, use BitTex for citation:
+                                    <div class="citation"><pre>
+@InProceedings{flowfence16,
+    author = {Earlence Fernandes and Justin Paupore and Amir Rahmati and Daniel Simionato and Mauro Conti and Atul Prakash},
+    title = {{F}low{F}ence: {P}ractical {D}ata {P}rotection for {E}merging {I}o{T} {A}pplication {F}rameworks},
+    booktitle = {Proceedings of the 25th {USENIX} Security Symposium},
+    month = August,
+    year = 2016
+} 
+                                   </div>
+                                </p>
+                            -->
+
+                            <div class="subtitle">Acknowledgements</div>
+                            <p>
+                                    <a  href="https://www.umich.edu/" target="_blank">University of Michigan</a><br>
+                                    <a  href="https://www.washington.edu/" target="_blank">University of Washington</a><br>
+                                    <a  href="https://www.berkeley.edu/" target="_blank">University of California, Berkeley</a><br>
+                                    <a  href="https://www.stanford.edu/" target="_blank">Stanford University</a><br>
+                                    <a  href="https://www.stonybrook.edu/" target="_blank">Stony Brook University</a><br>
+                                    <a href="https://www.nsf.gov/" target="_blank">National Science Foundation</a>
+                            </p>  
+
+                        </div>
+                    </div>
+                    <div id="tabs-4">
+                            <div class="title">FlowFence: Practical Data Protection for Emerging IoT Application Frameworks 
+                            </div>
+                            <div class="quote">An information flow control (IFC) system for IoT apps</div>
+                            <div class="article">
+                            <div class="subtitle">Summary</div>  
+                            <p>Emerging IoT programming frameworks enable building apps that compute on sensitive data produced by smart homes and wearables. However, these frameworks only support permission-based access control on sensitive data, which is ineffective at controlling how apps use data once they gain access. To address this limitation, we present FlowFence, a system that requires consumers of sensitive data to declare their intended dataflow patterns, which it enforces with low overhead, while blocking all other undeclared flows. FlowFence achieves this by explicitly embedding data flows and the related control flows within app structure. Developers use FlowFence support to split their apps into two components: (1) A set of Quarantined Modules that operate on sensitive data in sandboxes, and (2) Code that does not operate on sensitive data but orchestrates execution by chaining Quarantined Modules together via taint-tracked opaque handles—references to data that can only be dereferenced inside sandboxes. We studied three existing IoT frameworks to derive key functionality goals for FlowFence, and we then ported three existing IoT apps. Securing these apps using FlowFence resulted in an average increase in size from 232 lines to 332 lines of source code. Performance results on ported apps indicate that FlowFence is practical: A face-recognition based doorcontroller app incurred a 4.9% latency overhead to recognize a face and unlock a door.
+                            </p>
+                            <div class="subtitle">Code</div>
+
+                            <p class="p-pro">We accept pull requests!
+    
+                                <div class="button">
+                                    <a href="https://github.com/earlence/FlowFence_Release" target="_blank">
+                                        <button class="btn">Tools on Github</button>
+                                    </a>
+                                </div>
+                            </p>
+
+                            <div class="subtitle">Research Paper</div>
+                            <div class="button">
+                                    <a href="assets/papers/flowfence_sec16.pdf" target="_blank">
+                                        <button class="btn">Download Paper</button>
+                                    </a>
+                                </div>
+    
+    
+                                <p class="p-pro">when refering to out work, please cite it as:
+                                <div class="citation"><pre>
+Earlence Fernandes, Justin Paupore, Amir Rahmati, Daniel Simionato, Mauro Conti, and Atul Prakash 
+FlowFence: Practical Data Protection for Emerging IoT Application Frameworks
+In Proceedings of the 25th USENIX Security Symposium, August 2016   
+                                </div>
+                                    or, use BitTex for citation:
+                                    <div class="citation"><pre>
+@InProceedings{flowfence16,
+    author = {Earlence Fernandes and Justin Paupore and Amir Rahmati and Daniel Simionato and Mauro Conti and Atul Prakash},
+    title = {{F}low{F}ence: {P}ractical {D}ata {P}rotection for {E}merging {I}o{T} {A}pplication {F}rameworks},
+    booktitle = {Proceedings of the 25th {USENIX} Security Symposium},
+    month = August,
+    year = 2016
+} 
+                                   </div>
+                                </p>
+
+                            <!--<div class="subtitle">Team</div>
+                            <p>
+                                <a href="http://web.eecs.umich.edu/~earlence/" target="_blank">Earlence Fernandes</a><br>
+                                <a href="https://dblp.uni-trier.de/pers/hd/p/Paupore:Justin" target="_blank">Justin Paupore</a><br>
+                                <a href="http://amir.rahmati.com/" target="_blank">Amir Rahmati</a><br>
+                                <a href="https://dblp.uni-trier.de/pers/hd/s/Simionato:Daniel" target="_blank">Daniel Simionato</a><br>
+                                <a href="http://www.math.unipd.it/~conti/" target="_blank">Mauro Conti</a><br>
+                                <a href="http://web.eecs.umich.edu/~aprakash/" target="_blank">Atul Prakash</a><br>
+                            </p>
+                        -->
+
+                            <div class="subtitle">Acknowledgements</div>
+                            <p>
+                                    <a  href="https://www.umich.edu/" target="_blank">University of Michigan</a><br>
+                                    <a href="http://www.unipd.it/en/" target="_blank" >University of Padua</a><br>
+                                    <a href="https://www.nsf.gov/" target="_blank">National Science Foundation</a>
+                            </p>  
+
+                        </div>
+                    </div>
+
+                    <div id="tabs-5">
+                            <div class="title">Decentralized Action Integrity for Trigger-Action IoT Platforms
+                            </div>
+                            <div class="quote">Clean-slate design for trigger-action platforms to support decentralized action integrity
+                            </div>
+                            <div class="article">
+                            <div class="subtitle">Summary</div>  
+                            <p>Trigger-Action platforms are web-based systems that enable users to create automation rules by stitching together online services representing digital and physical resources using OAuth tokens. Unfortunately, these platforms introduce a longrange large-scale security risk: If they are compromised, an attacker can misuse the OAuth tokens belonging to a large number of users to arbitrarily manipulate their devices and data. We introduce Decentralized Action Integrity, a security principle that prevents an untrusted trigger-action platform from misusing compromised OAuth tokens in ways that are inconsistent with any given user’s set of trigger-action rules. We present the design and evaluation of Decentralized Trigger-Action Platform (DTAP), a trigger-action platform that implements this principle by overcoming practical challenges. DTAP splits currently monolithic platform designs into an untrusted cloud service, and a set of user clients (each user only trusts their client). Our design introduces the concept of Transfer Tokens (XTokens) to practically use fine grained rule-specific tokens without increasing the number of OAuth permission prompts compared to current platforms. Our evaluation indicates that DTAP poses negligible overhead: it adds less than 15ms of latency to rule execution time, and reduces throughput by 2.5%.
+                            </p>
+                          
+
+                            <div class="subtitle">Research Paper</div>
+                            <div class="button">
+                                    <a href="assets/papers/dtap_ndss18.pdf" target="_blank">
+                                        <button class="btn">Download Paper</button>
+                                    </a>
+                                </div>
+    
+    
+                                <p class="p-pro">when refering to out work, please cite it as:
+                                <div class="citation"><pre>
+Earlence Fernandes, Amir Rahmati, Jaeyeon Jung, Atul Prakash 
+Decentralized Action Integrity for Trigger-Action IoT Platforms 
+22nd Network and Distributed Security Symposium (NDSS 2018), San Diego, CA, Feb 2018  
+                                </div>
+                                    or, use BitTex for citation:
+                                    <div class="citation"><pre>
+InProceedings{dtap18,
+   author = {Earlence Fernandes and Amir Rahmati and Jaeyeon Jung and Atul Prakash},
+   title = {{Decentralized Action Integrity for Trigger-Action IoT Platforms}},
+   booktitle = {22nd Network and Distributed Security Symposium (NDSS 2018)},
+   month = Feb,
+   year = 2018
+}                                </div>
+                                </p>
+
+
+                            <div class="subtitle">Acknowledgements</div>
+                            <p>
+                                    <a  href="https://www.umich.edu/" target="_blank">University of Michigan</a><br>
+                                    <a href="https://www.nsf.gov/" target="_blank">National Science Foundation</a>
+                            </p>  
+
+                        </div>
+                    </div>
+                    <div id="tabs-6">
+                            <div class="title">ContexIoT: Towards Providing Contextual Integrity to Appified IoT Platforms
+                                </div>
+                                <div class="quote">A system that provides contextual permission prompts in SmartThings apps</div>
+                                <div class="article">
+                                <div class="subtitle">Summary</div>  
+                                <p>The Internet-of-Things (IoT) has quickly evolved to
+                                        a new appified era where third-party developers can write apps
+                                        for IoT platforms using programming frameworks. Like other
+                                        appified platforms, e.g., the smartphone platform, the permission
+                                        system plays an important role in platform security. However,
+                                        design flaws in current IoT platform permission models have
+                                        been reported recently, exposing users to significant harm such as
+                                        break-ins and theft. To solve these problems, a new access control
+                                        model is needed for both current and future IoT platforms. In this
+                                        paper, we propose ContexIoT, a context-based permission system
+                                        for appified IoT platforms that provides contextual integrity by
+                                        supporting fine-grained context identification for sensitive actions,
+                                        and runtime prompts with rich context information to help users
+                                        perform effective access control. Context definition in ContexIoT
+                                        is at the inter-procedure control and data flow levels, that we
+                                        show to be more comprehensive than previous context-based
+                                        permission systems for the smartphone platform. ContexIoT is
+                                        designed to be backward compatible and thus can be directly
+                                        adopted by current IoT platforms.
+                                        We prototype ContexIoT on the Samsung SmartThings platform,
+                                        with an automatic app patching mechanism developed to
+                                        support unmodified commodity SmartThings apps. To evaluate
+                                        the system’s effectiveness, we perform the first extensive study
+                                        of possible attacks on appified IoT platforms by reproducing
+                                        reported IoT attacks and constructing new IoT attacks based
+                                        on smartphone malware classes. We categorize these attacks
+                                        based on lifecycle and adversary techniques, and build the first
+                                        taxonomized IoT attack app dataset. Evaluating ContexIoT on
+                                        this dataset, we find that it can effectively distinguish the attack
+                                        context for all the tested apps. The performance evaluation on
+                                        283 commodity IoT apps shows that the app patching adds nearly
+                                        negligible delay to the event triggering latency, and the permission
+                                        request frequency is far below the threshold that is considered
+                                        to risk user habituation or annoyance.
+                                </p>
+                                <div class="subtitle">Code for Attacks</div>
+    
+                                <p class="p-pro">
+        
+                                    <div class="button">
+                                        <a href="https://sites.google.com/site/iotcontextualintegrity/home" target="_blank">
+                                            <button class="btn">Available Here</button>
+                                        </a>
+                                    </div>
+                                </p>
+    
+                                <div class="subtitle">Research Paper</div>
+                                <div class="button">
+                                        <a href="assets/papers/contexiot_ndss17.pdf" target="_blank">
+                                            <button class="btn">Download Paper</button>
+                                        </a>
+                                    </div>
+        
+        
+                                    <p class="p-pro">when refering to out work, please cite it as:
+                                    <div class="citation"><pre>
+Yunhan Jack Jia, Qi Alfred Chen, Shiqi Wang, Amir Rahmati, Earlence Fernandes, Z. Morley Mao, and Atul Prakash 
+ContexIoT: Towards Providing Contextual Integrity to Appified IoT Platforms
+21st Network and Distributed Security Symposium (NDSS 2017), Feb 2017   
+                                    </div>
+                                        or, use BitTex for citation:
+                                        <div class="citation"><pre>
+@InProceedings{contexiot17,
+    author = {Yunhan Jack Jia and Qi Alfred Chen and Shiqi Wang and Amir Rahmati and Earlence Fernandes and Z. Morley Mao 
+        and Atul Prakash},
+    title = {{ContexIoT: Towards Providing Contextual Integrity to Appified IoT Platforms}},
+    booktitle = {21st Network and Distributed Security Symposium},
+    month = February,
+    year = 2017
+}
+                                       </div>
+                                    </p>
+    
+                               <!--<div class="subtitle">Team</div>
+                                <p>
+                                    <a href="http://web.eecs.umich.edu/~jackjia/" target="_blank">Yunhan Jack Jia</a><br>
+				                    <a href="http://web.eecs.umich.edu/~alfchen/" target="_blank">Qi Alfred Chen</a><br>
+				                    Shiqi Wang<br>
+				                    <a href="http://amir.rahmati.com/" target="_blank">Amir Rahmati</a><br>
+                                    <a href="http://web.eecs.umich.edu/~earlence/" target="_blank">Earlence Fernandes</a><br>
+				                    <a href="http://web.eecs.umich.edu/~zmao/" target="_blank">Z. Morley Mao</a><br>
+                                    <a href="http://web.eecs.umich.edu/~aprakash/" target="_blank">Atul Prakash</a>
+                                </p>
+                            -->
+    
+                                <div class="subtitle">Acknowledgements</div>
+                                <p>
+                                        <a  href="https://www.umich.edu/" target="_blank">University of Michigan</a><br>
+                                        <a href="https://www.nsf.gov/" target="_blank">National Science Foundation</a><br>
+                                        <a href="https://www.onr.navy.mil/" target="_blank">Office of Naval Research</a>
+                                </p>  
+    
+                            </div>
+                       
+                    </div>
+                    <div id="tabs-7">
+                            <div class="title">Heimdall: A Privacy-Respecting Implicit Preference Collection Framework
+                                </div>
+                                <div class="quote">A system that enables privacy-respecting collection of recommendation data from the phone and the built environment</div>
+                                <div class="article">
+                                <div class="subtitle">Summary</div>  
+                                <p>Many of the everyday decisions a user makes rely on the suggestions of online recommendation systems. These systems amass implicit (e.g., location, purchase history, browsing history) and explicit (e.g., reviews, ratings) feedback from multiple users, produce a general consensus, and provide suggestions based on that consensus. However, due to privacy concerns, users are uncomfortable with implicit data collection, thus requiring recommendation systems to be overly dependent on explicit feedback. Unfortunately, users do not frequently provide explicit feedback. This hampers the ability of recommendation systems to provide high-quality suggestions. We introduce Heimdall, the first privacy-respecting implicit preference collection framework that enables recommendation systems to extract user preferences from their activities in a privacy-respecting manner. The key insight is to enable recommendation systems to run a collector on a user’s device and precisely control the information a collector transmits to the recommendation system back-end. Heimdall introduces immutable blobs as a mechanism to guarantee this property. We implemented Heimdall for the smartphone and smart home environments and wrote three example collectors to enhance existing recommendation systems with implicit feedback. Our performance results suggest that the overhead of immutable blobs is minimal, and a user study of 166 participants indicates that privacy concerns are significantly less when collectors record only specific information—a property that Heimdall enables.
+                                </p>
+                                <div class="subtitle">Code</div>
+    
+                                <p>
+                                    Coming soon!
+        
+                                    <!--<div class="button">
+                                        <a href="" target="_blank">
+                                            <button class="btn">Code on Github</button>
+                                        </a>
+                                    </div>
+                                -->
+                                </p>
+    
+                                <div class="subtitle">Research Paper</div>
+                                <div class="button">
+                                        <a href="assets/papers/heimdall_mobisys17.pdf" target="_blank">
+                                            <button class="btn">Download Paper</button>
+                                        </a>
+                                    </div>
+        
+        
+                                    <p class="p-pro">when refering to out work, please cite it as:
+                                    <div class="citation"><pre>
+Amir Rahmati, Earlence Fernandes, Kevin Eykholt, Xinheng Chen, and Atul Prakash 
+Heimdall: A Privacy-Respecting Implicit Preference Collection Framework 
+15th ACM International Conference on Mobile Systems, Applications, and Services (ACM MobiSys 2017), June 2017   
+                                    </div>
+                                        or, use BitTex for citation:
+                                        <div class="citation"><pre>
+@InProceedings{heimdall17,
+   author = {Amir Rahmati and Earlence Fernandes and Kevin Eykholt and Xinheng Chen and Atul Prakash},
+   title = {{Heimdall: A Privacy-Respecting Implicit Preference Collection Framework}},
+   booktitle = {15th ACM International Conference on Mobile Systems, Applications, and Services},
+   month = June,
+   year = 2017
+}                                       </div>
+                                    </p>
+    
+    
+                                <div class="subtitle">Acknowledgements</div>
+                                <p>
+                                        <a  href="https://www.umich.edu/" target="_blank">University of Michigan</a><br>
+                                        <a href="https://www.nsf.gov/" target="_blank">National Science Foundation</a>
+                                </p>  
+    
+                            </div>
+                    </div>
+
+                  
+                </div>
+                
+                <ul id="menu" class="row--1">
+                        <li>
+                            <a id="plist0" class="tab__link active" href="#tabs-1">SmartThings security analysis</a>
+                        </li>
+                        <li>
+                                <a id="plist1" class="tab__link" href="#tabs-2">Robust physical perturbations</a>
+                        </li>
+                        <li>
+                                <a id="plist2" class="tab__link" href="#tabs-3">Object detector attacks</a>
+                        </li>
+                        <li>
+                            <a id="plist3" class="tab__link" href="#tabs-4">FlowFence</a>
+                        </li>
+                        <li>
+                            <a id="plist4" class="tab__link" href="#tabs-5">DTAP</a>
+                        </li>
+                        <li>
+                            <a id="plist5" class="tab__link" href="#tabs-6">ContexIoT</a>
+                        </li>
+                        <li>
+                            <a id="plist6" class="tab__link" href="#tabs-7">Heimdall</a>
+                        </li>              
+                </ul>
+               
+            </div>
+        </div>
+
+        <footer class="footer">
+
+            <p class="footer__copyright">
+                Designed and built by
+                <a href="http://xiu-guo.com/" class="footer__link">Xiu Guo</a> <br/>
+		&copy; 2018 earlence.com All Rights Reserved
+            </p>
+        </footer>
+    </div>
+</body>
+
+</html>
