@@ -1,7 +1,6 @@
 :root {
-  --color-primary:#673AB7;
-  --color-primary-light:#7E57C2;
-  --color-primary-lightest:#bb86fc;
+  --color-primary:#9b0000;
+  --color-primary-light:#c5050c;
   --color-grey-dark-2: #212121; }
 
 * {
@@ -423,7 +422,7 @@ section {
   font-size: 1.6rem;
   padding: .5rem 1rem .5rem 1rem;
   margin-bottom: 1rem;
-  background-color: #e4d6f6; }
+  background-color: #dadfe1; }
 
 .p-pro {
   font-size: 1.5rem;
