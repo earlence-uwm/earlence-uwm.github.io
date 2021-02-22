@@ -183,17 +183,8 @@ h4 {
 @media only screen and (max-width: 31.25em) {
     .navigation__link--active:hover,
     .navigation__link:hover,
-    .navigation__link:active {
+    .navigation__link--active {
         flex-direction: column;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-    }
-}
-
-@media only screen and (max-width: 31.25em) {
-    .navigation__link--active:hover,
-    .navigation__link:hover,
-    .navigation__link:active {
         margin: 0rem;
         padding: 0rem 6rem;
     }
