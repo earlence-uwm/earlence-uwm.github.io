@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+
+    <title>Group Photos | Earlence Fernandes </title>
+
+    <style>
+        div.gallery {
+          border: 1px solid #ccc;
+        }
+        
+        div.gallery:hover {
+          border: 1px solid #777;
+        }
+        
+        div.gallery img {
+          width: 100%;
+          height: auto;
+        }
+        
+        div.desc {
+          padding: 15px;
+          text-align: center;
+        }
+        
+        * {
+          box-sizing: border-box;
+        }
+        
+        .responsive {
+          padding: 0 6px;
+          float: left;
+          width: 24.99999%;
+        }
+        
+        @media only screen and (max-width: 700px) {
+          .responsive {
+            width: 49.99999%;
+            margin: 6px 0;
+          }
+        }
+        
+        @media only screen and (max-width: 500px) {
+          .responsive {
+            width: 100%;
+          }
+        }
+        
+        .clearfix:after {
+          content: "";
+          display: table;
+          clear: both;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                Earlence Fernandes
+            </div>
+
+            <div class="navigation">
+                <nav>
+                    <ul class="navigation__list">
+                        <li class="navigation__item">
+                            <a href="index.html" class="navigation__link">Home</a>
+                        </li>
+                        <li class="navigation__item">
+                            <a href="publications.html" class="navigation__link">Publications</a>
+                        </li>
+                        <li class="navigation__item">
+                            <a href="photos.html" class="navigation__link--active">Photos</a>
+                        </li>
+                        <!-- <li class="navigation__item">
+                            <a href="academic_service.html" class="navigation__link">Academic service</a>
+                        </li> -->
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <section class="Photos">
+            
+            <div class="responsive">
+                <div class="gallery">
+                  <a target="_blank" href="assets/images/history/YunangDefense.jpg">
+                    <img src="assets/images/history/YunangDefense.jpg" width="600" height="400">
+                  </a>
+                  <div class="desc">Yunang Chen's defense Oct 2023 at UW Madison. Left-to-right: Rahul Chatterjee, Earlence Fernandes,
+                    Yunang Chen, Somesh Jha, Kassem Fawaz.
+                  </div>
+                </div>
+              </div>
+
+              <div class="responsive">
+                <div class="gallery">
+                  <a target="_blank" href="assets/images/history/Group2023.jpeg">
+                    <img src="assets/images/history/Group2023.jpeg" width="600" height="400">
+                  </a>
+                  <div class="desc">Group lunch in La Jolla, Dec 2023. Left-to-right: Nicole, Luoxi, Leo, Amrita,
+                    Andrey, Nishit, Earlence.
+                  </div>
+                </div>
+              </div>
+            
+        </section>
+
+        <!-- <footer class="footer">
+
+            <p class="footer__copyright">
+                Designed and built by
+                <a href="http://xiu-guo.com/" target="_blank" class="footer__link">Xiu Guo</a> <br/> &copy; earlence.com All Rights Reserved
+            </p>
+        </footer> -->
+
+    </div>
+
+</body>
+
+</html>
