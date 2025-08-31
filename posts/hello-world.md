@@ -1,95 +1,66 @@
 Title: Some Stuff We’ve Been Doing at UCSD
-Date: 2025-08-31
+Date: 2024-10-01
 Tags: ucsd, research, security, adversarial-ml, cycling
 
 # Some Stuff We’ve Been Doing at UCSD
 
-It has been little more than two years since I moved to sunny San Diego and restarted my research group (now with **Luoxi Meng, Nishit Pandya, Andrey Labunets and Xiaohan Fu**, and occasionally **Ashish Hooda** from UW Madison). I thought I’d write a short post discussing what we’ve been up to.  
+It has been little more than two years since I moved to sunny San Diego and restarted my research group (now with Luoxi Meng, Nishit Pandya, Andrey Labunets and Xiaohan Fu, and occasionally Ashish Hooda from UW Madison), so I thought that I'd write a short post discussing what we've been up to. The post describes the context and rationale for how and why we choose to do certain projects and also discusses the contributions to computer security we made along the way. Also, everyone seems to be on LinkedIn?! Whatever happened to Twitter. 
 
-This post describes the context and rationale for how and why we choose to do certain projects, and also discusses our contributions to computer security along the way.  
-
-Also, everyone seems to be on LinkedIn?! Whatever happened to Twitter.  
+![Catalina Bikepacking, those are wireless shifters lol](../posts/images/oct-2024/catalina-bikepack.jpeg)
 
 ---
 
 ## Cybersecurity and (Professional) Sports!
 
-What do these two things have in common? This is a new area for me that merges my professional and personal interests. Some of you might know that I’m a cycling fanatic. When I say cycling, it’s not a 2-mile trip to the grocery store, but a **70-mile ride with 8,000 feet of climbing on dirt roads**! (This was roughly the stats for the Catalina trip above). That’s my idea of a fun ride.  
 
-We had a paper at the new **USENIX WOOT** conference this year where we analyzed the **security of wireless gear shifting in bikes** used in professional races such as the Tour de France. We showed that an attacker can remotely manipulate the gear positions of a target rider.  
+What do these two things have in common? This is a new area for me that merges my professional and personal interests. Some of you might know that I’m a cycling fanatic. When I say cycling, its not a 2 mile trip to the grocery store, but a 70 mile ride with 8,000 feet of climbing on dirt roads! (this was roughly the stats for the Catalina trip above). That’s my idea of a fun ride. We had a paper at the new USENIX WOOT conference this year where we analyzed the security of wireless gear shifting in bikes used in professional races such as the Tour de France. We showed that an attacker can remotely manipulate the gear positions of a target rider. This can have real impact on race outcomes, especially in professional cycling that has had a long and troubled history with integrity issues. This project was an excellent collab. ft. wireless wizards Aanjhan Ranganathan and Maryam Motallebi from Northeastern. The project had more impact than I expected. In addition to an excellent article in [WIRED](https://www.wired.com/story/shimano-wireless-bicycle-shifter-jamming-replay-attacks/) by Andy Greenberg (among many [other](https://www.forbes.com/sites/daveywinder/2024/08/28/its-2024-and-now-bicycle-hackers-can-shift-your-gears/) excellent articles from different [venues](https://escapecollective.com/heres-the-real-lesson-from-that-wireless-shifting-hack/)), Shimano implemented changes to their software based on our recommendations and professional racers at the Vuelta a Espana (one of the grand tours in cycling!) actually raced with that software! We also briefed the UCI on tech and wireless fraud! (UCI is the governing body for the sport of professional cycling). Out of all the projects I’ve done in the recent years, this was the most fun! I even raced up a mountain against a colleague of mine (who is an actual bike racer) to record a [demo video](https://www.youtube.com/watch?v=7Pgd-EpLtDg&ab_channel=AanjhanRanganathan) of the attack in action!
 
-This can have real impact on race outcomes, especially in professional cycling, which has had a long and troubled history with integrity issues.  
-
-This project was an excellent collaboration with wireless wizards **Aanjhan Ranganathan** and **Maryam Motallebi** from Northeastern.  
-
-The project had more impact than I expected:  
-- An excellent **WIRED article** by Andy Greenberg (among other press).  
-- **Shimano implemented changes** to their software based on our recommendations.  
-- Professional racers at the **Vuelta a España** actually raced with that software!  
-- We briefed the **UCI** (governing body of pro cycling) on tech and wireless fraud.  
-
-Out of all projects in recent years, this was the most fun. I even raced up a mountain against a colleague (an actual racer!) to record a demo video of the attack.  
-
-**Backstory:** I had this project idea in 2019, but it didn’t take off until a conversation with **Yoshi Kohno** at USENIX Security 2023. I also met Aanjhan there and pitched it — the rest is history.  
-
+The backstory is that I had this project idea back in 2019, but due to various reasons, I never ended up pursuing it to completion. Thanks to a fortuitous conversation with Yoshi Kohno at USENIX security 2023, I ended up trying again. I also met Aanjhan at the same conference and pitched the project. He and Maryam turned out to be fantastic collaborators.
 ---
 
 ## Least Privilege Authorization
 
-*Or: how to ensure that “agents” like ChatGPT don’t read your email when they aren’t supposed to.*  
 
-A long-running line of work in my group re-interprets the **principle of least privilege** for modern systems. It’s not the hottest thing in research, but it’s important work that makes computers secure — and has remarkable potential for today’s technologies.  
+A long running line of work in my group; the focus here is re-interpreting the principle of least privilege for modern systems. I know it is not the hottest thing on the research market right now, but hey, this is important stuff that actually makes computers work securely, and as I will explain shortly, it has remarkable potential to positively affect the security of some of the hot technologies out there.
 
-The principle (dating back to 1975) is hard to apply to modern large, complex, intelligent systems. We proposed new abstractions (a **client-supplied reference monitor** and **stateful policies**) for protocols like **OAuth**. This protects tokens from abuse by limiting their privilege while still retaining functionality.  
+As it turns out, a design principle from 1975 is a good idea in theory, but very difficult to actually apply to contemporary systems that are large, complex and intelligent (none of which existed or even predicted at the time this principle was introduced). In an attempt at a modern and more relevant interpretation of the principle, we introduced a new set of abstractions (a client-supplied reference monitor and stateful policies) for protocols like OAuth. This can protect tokens from abuse by limiting their privilege while also retaining functionality of the system. This was a paper at [USENIX security](https://www.usenix.org/conference/usenixsecurity24/presentation/cao-leo) this year and was supported by a research scholar award from [Google](https://research.google/programs-and-events/research-scholar-program/recipients/).
 
-This was a paper at **USENIX Security** this year, supported by a **Google Research Scholar Award**.  
+**This type of improvement is also fundamental to securing “AI agents” in my opinion. 
 
-I also see this as fundamental to securing “AI agents.”  
+The past 10 years of research in adversarial machine learning has focused on improving the robustness of the model in isolation. This is akin to always writing software that is “helpful and harmless”. As computer security researchers, our experience tells us this is strategy does not work. You absolutely need systems-level and end-to-end thinking when it comes to dealing with the vulnerabilities of machine learning, especially now when people are building models that can actually take action on your data and devices (see the next part).
 
-For 10 years, adversarial ML research has mostly focused on model robustness in isolation — the “helpful and harmless” mindset. But our systems security experience tells us that’s not enough. You need **systems-level, end-to-end thinking** when securing ML, especially as models gain the ability to act on data and devices.  
 
 ---
 
 ## Adversarial Machine Learning for Problems That Matter
 
-Since my first paper at the intersection of ML and computer security, I’ve looked for problems that actually matter. The first wave of adversarial ML (mid-2010s) often lacked real applications. Without systems, there’s nothing to secure beyond the model.  
+Ever since my [first paper](https://arxiv.org/abs/1707.08945) at the intersection of machine learning and computer security, I’ve had an evolving interest in the space, in search of problems that actually matter. I think the first wave of adversarial machine learning didn’t really have real applications that we could use as a barometer for measuring security progress. A lot of this research happened in the context of computer vision, but at the time (early late 2016 - early 2017), there wasn’t much going on beyond some efforts around self-driving cars. In my opinion, this is also a reason why there hasn’t been much practice-relevant progress in securing ML systems — when there is no system, there isn’t anything to secure beyond the model itself. And as I explained earlier, securing the model itself isn't good enough if you want meaningful end-to-end security guarantees.  
 
-Nearly a decade since Szegedy et al.’s adversarial examples, and 6 years since our “Stop Signs” paper, we finally have **realistic applications** where security matters:  
-1. **LLM-based agents that use tools**.  
-2. **Vision-based harmful imagery scanning systems**.  
+Almost a decade since the Szegedy et al. paper on adversarial examples (and 6 years since our Stop signs paper), I think we’ve finally hit a point where there are realistic applications of machine learning. This is when and where computer security problems actually matter. It also provides a solid set of systems to work with and to reason about what security properties we actually want to build. A few examples of realistic systems are: (1) LLM-based agents that use tools; and (2) vision-based harmful imagery scanning systems. 
 
-### Imprompter Attacks
+Our first result in this space concerns adversarial prompts for LLM Agents. Let's say that you are prepping a job application cover letter and you want to use an AI agent (such as ChatGPT or LeChat) to polish that letter. You go on a marketplace such a PromptBase to look for a prompt that will do the best job at polishing that letter. You find this:
 
-Our first result in this space: **adversarial prompts for LLM agents**.  
 
-Example: you’re writing a job application letter and grab a “polisher” prompt from a marketplace like PromptBase. Without realizing it, you may be running an **adversarial example** that:  
-- Extracts PII keywords from your session.  
-- Formats them into a malicious URL (e.g., `velocity.show`).  
-- Issues a hidden markdown image load to exfiltrate data.  
+![Example Imprompter Attack](../posts/images/oct-2024/imprompter.jpeg)
 
-The user sees nothing (the image is a 1×1 transparent PNG). Data stolen.  
+Without reading further, can you say what this prompt does? Do you think it polishes a job application letter? Would you try it in your chat session? As it turns out, this is an automatically computed adversarial example that will analyze your chat session, pull out PII keywords, format those keywords into a syntactically-valid URL whose fully-qualified domain points to an attacker's server (velocity.show in the example, can you pick it out?), and finally issue a markdown image load with that URL and then exfiltrate that PII. This is probably the first adversarial example for an LLM agent that misuses a tool (the markdown image load tool)! The user sees nothing (the loaded image is a 1x1 transparent png). And their data is stolen. Of course, now that I've told you what this prompt does, you can go back to look at it, and maybe you can decipher some of its behavior. Thanks to the naming powers of Geoff Voelker and Stefan Savage, we call these [Imprompter Attacks](https://imprompter.ai/), coz they  prompt agents to improperly use tools.
 
-We call these **Imprompter Attacks** (thanks to Geoff Voelker & Stefan Savage).  
+We computed these attacks on an open-weights Mistral model (using special-purpose objective functions and an adapted form of the GCG algorithm that was originally invented for jailbreaking, but we re-purpose for a prompt injection attack). It transferred in a blackbox manner to the LeChat agent from Mistral that uses some variant of the open-weights model. It generalizes to unseen conversations and performs better than the hand-written English language version! This attack style builds on existing work of the prompt injection community. In particular, these fall in the class of so-called "markdown exfiltration attacks." Prior work has used natural language malicious instructions, that can even be made invisible with unicode encoding tricks. However, chatbot agents have since started filtering out this stuff. Our work shows how an optimization-based attacker could compute a single obfuscated sequence of tokens that achieves a complex effect. 
 
-- Computed with an adapted GCG algorithm on an open-weights Mistral model.  
-- Transferred to LeChat (Mistral-based).  
-- Generalizes to unseen conversations, better than hand-written English prompts.  
+We disclosed this attack to the Mistral security team and they rated it as a medium severity issue. Their fix was to disable external loading of images. Whether this is the best fix we can achieve is open to debate (and research!). On the one hand, it does fix the exfiltration issue, but it limits the agent's functionality -- the entire point of an LLM agent is to use tools! The team was credited in the Mistral release notes pictured below.
 
-Mistral rated it medium severity; their fix was disabling external image loads. This prevents exfiltration but also reduces agent functionality — an open research question.  
+![Research team credited with reporting the vuln](../images/oct-2024/mistral.png)
 
-Impact: our adversarial prompt work **led to real security fixes** in production systems, plus a **WIRED article** by Matt Burgess.  
+The exciting thing for us as a research team was that this optimization-based adversarial prompt led to actual security fixes in a production AI Agent system! I am very excited about this impact, in addition to the excellent [WIRED](https://www.wired.com/story/ai-imprompter-malware-llm/) article by Matt Burgess.
 
-We also disclosed to **ChatGLM**, and are expanding to other chatbot agents.  
+(Emphasis on system here, coz that's what an agent is -- ML integrated with non-ML software so that you can actually do useful stuff).
 
-### NDSS Paper: Perceptual Hashing
+We also disclosed this stuff to ChatGLM and it is likely we will be making disclosures to other companies soon depending on our progress in evaluating this attack vector on different chatbot agents.
 
-Our second result: an **NDSS paper** on adversarial examples in **perceptual hashing**.  
+Our second result on adversarial examples that matter appeared in an [NDSS](https://www.ndss-symposium.org/ndss-paper/experimental-analyses-of-the-physical-surveillance-risks-in-client-side-content-scanning/) paper this year. We showed how adversarial examples in perceptual hashing functions lead to surveillance issues in client-side scanning protocols (these protocols aim to curb the spread of harmful imagery exploiting children). We also experimentally uncovered a rather undesirable trade-off: a more robust perceptual hashing function leads to more robust surveillance of material that is not connected to harmful imagery. While I acknowledge that curbing harmful imagery about children needs some technical solutions (in addition to societal efforts), it is also important to balance that with the privacy of the communications of the general public.
 
-We showed:  
-- They cause **surveillance issues** in client-side scanning protocols (for harmful imagery).  
-- A stronger perceptual hash = more robust surveillance of unrelated material.  
 
-This raises important **privacy vs. safety trade-offs** for society.  
+
 
 ---
 
