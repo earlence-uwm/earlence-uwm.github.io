@@ -1,5 +1,5 @@
 Title: Some Stuff We’ve Been Doing at UCSD
-Date: 2024-10-01
+Date: 2024-Oct-01
 Tags: ucsd, research, security, adversarial-ml, cycling
 
 # Some Stuff We’ve Been Doing at UCSD
@@ -12,10 +12,10 @@ It has been little more than two years since I moved to sunny San Diego and rest
 
 ## Cybersecurity and (Professional) Sports!
 
-
 What do these two things have in common? This is a new area for me that merges my professional and personal interests. Some of you might know that I’m a cycling fanatic. When I say cycling, its not a 2 mile trip to the grocery store, but a 70 mile ride with 8,000 feet of climbing on dirt roads! (this was roughly the stats for the Catalina trip above). That’s my idea of a fun ride. We had a paper at the new USENIX WOOT conference this year where we analyzed the security of wireless gear shifting in bikes used in professional races such as the Tour de France. We showed that an attacker can remotely manipulate the gear positions of a target rider. This can have real impact on race outcomes, especially in professional cycling that has had a long and troubled history with integrity issues. This project was an excellent collab. ft. wireless wizards Aanjhan Ranganathan and Maryam Motallebi from Northeastern. The project had more impact than I expected. In addition to an excellent article in [WIRED](https://www.wired.com/story/shimano-wireless-bicycle-shifter-jamming-replay-attacks/) by Andy Greenberg (among many [other](https://www.forbes.com/sites/daveywinder/2024/08/28/its-2024-and-now-bicycle-hackers-can-shift-your-gears/) excellent articles from different [venues](https://escapecollective.com/heres-the-real-lesson-from-that-wireless-shifting-hack/)), Shimano implemented changes to their software based on our recommendations and professional racers at the Vuelta a Espana (one of the grand tours in cycling!) actually raced with that software! We also briefed the UCI on tech and wireless fraud! (UCI is the governing body for the sport of professional cycling). Out of all the projects I’ve done in the recent years, this was the most fun! I even raced up a mountain against a colleague of mine (who is an actual bike racer) to record a [demo video](https://www.youtube.com/watch?v=7Pgd-EpLtDg&ab_channel=AanjhanRanganathan) of the attack in action!
 
-The backstory is that I had this project idea back in 2019, but due to various reasons, I never ended up pursuing it to completion. Thanks to a fortuitous conversation with Yoshi Kohno at USENIX security 2023, I ended up trying again. I also met Aanjhan at the same conference and pitched the project. He and Maryam turned out to be fantastic collaborators.
+
+
 ---
 
 ## Least Privilege Authorization
