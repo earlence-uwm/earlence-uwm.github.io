@@ -49,7 +49,7 @@ We computed these attacks on an open-weights Mistral model (using special-purpos
 
 We disclosed this attack to the Mistral security team and they rated it as a medium severity issue. Their fix was to disable external loading of images. Whether this is the best fix we can achieve is open to debate (and research!). On the one hand, it does fix the exfiltration issue, but it limits the agent's functionality -- the entire point of an LLM agent is to use tools! The team was credited in the Mistral release notes pictured below.
 
-![Research team credited with reporting the vuln](../images/oct-2024/mistral.png)
+![Research team credited with reporting the vuln](../posts/images/oct-2024/mistral.png)
 
 The exciting thing for us as a research team was that this optimization-based adversarial prompt led to actual security fixes in a production AI Agent system! I am very excited about this impact, in addition to the excellent [WIRED](https://www.wired.com/story/ai-imprompter-malware-llm/) article by Matt Burgess.
 
