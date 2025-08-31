@@ -1,5 +1,5 @@
 Title: Some Stuff We’ve Been Doing at UCSD
-Date: 2024-Oct-01
+Date: 2024-10-01
 Tags: ucsd, research, security, adversarial-ml, cycling
 
 # Some Stuff We’ve Been Doing at UCSD
