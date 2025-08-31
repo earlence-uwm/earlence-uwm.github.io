@@ -1,0 +1,9 @@
+[
+  {
+    "slug": "hello-world",
+    "file": "hello-world.md",
+    "title": "Hello, World",
+    "date": "2025-08-01",
+    "tags": ["intro", "welcome"]
+  }
+]
