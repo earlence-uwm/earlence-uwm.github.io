@@ -30,7 +30,7 @@
     .list-empty{padding:2rem; text-align:center; color:var(--muted)}
     footer{border-top:3px solid var(--accent2); margin-top:2rem; color:var(--accent2)}
     .srch{display:flex; gap:.5rem; align-items:center}
-    .srch input{flex:1; direction: ltr; text-align: left; padding:.6rem .8rem; border-radius:12px; border:1px solid color-mix(in srgb, var(--fg) 12%, transparent); background:var(--bg); color:var(--fg)}
+    .srch input{flex:1; padding:.6rem .8rem; border-radius:12px; border:1px solid color-mix(in srgb, var(--fg) 12%, transparent); background:var(--bg); color:var(--fg); direction:ltr; text-align:left}
     .chip{display:inline-block; padding:.15rem .5rem; border-radius:999px; background:var(--accent2); color:#fff; font-size:.8rem}
     .toc{border-left:3px solid var(--accent); padding-left:.8rem; margin:.5rem 0 1rem 0}
     .back{display:inline-flex; align-items:center; gap:.4rem; color:var(--accent)}
@@ -42,7 +42,7 @@
   <header>
     <div class="wrap" style="display:flex; gap:1rem; align-items:center; justify-content:space-between">
       <a class="brand" href="#">Research Blog</a>
-      <nav><a href="https://www.earlence.com">Home</a></nav>
+      <nav><a href="#">Home</a></nav>
     </div>
   </header>
 
@@ -51,19 +51,15 @@
   </main>
 
   <footer>
-    <div class="wrap muted">Purely client-side, vibe-coded using ChatGPT.</div>
+    <div class="wrap muted">Purely client-side. Vibe-coded using ChatGPT. </div>
   </footer>
 
   <script>
   // --- Minimal client-side blog ---
-  // HOW IT WORKS
-  // 1) You maintain /posts/posts.json that lists your markdown files.
-  // 2) Each .md can optionally include simple front‑matter lines like:
-  //    Title: My Post Title\nDate: 2025-08-01\nTags: notes, demo\n\n# Heading ...
-  // 3) This file renders the index (list) and a post view (#/post/<slug>).
+  // Router: #/post/<slug>?section=<id>
 
   const CONFIG = {
-    title: "Research Blog",
+    title: "My Markdown Blog",
     postsIndex: "posts/posts.json",
     postsBase: "posts/",
     enableSearch: true
@@ -107,7 +103,6 @@
 
   function setTitle(t){ document.title = t ? t + " • " + CONFIG.title : CONFIG.title; $(".brand").textContent = CONFIG.title; }
 
-  // Parse current hash into {slug, params}
   function parseHash(){
     const h = location.hash || '';
     const m = h.match(/^#\/post\/([^?]+)(?:\?(.*))?/);
@@ -121,39 +116,49 @@
     return { slug: m ? decodeURIComponent(m[1]) : null, params };
   }
 
-  function renderList(posts, q=""){
+  // Renders the list shell (including search input) once, then updates #list on input without tearing down the input.
+  function renderList(posts){
     setTitle("");
-    const filtered = q ? posts.filter(p => (
-      (p.title||"").toLowerCase().includes(q) ||
-      (p.tags||[]).join(" ").toLowerCase().includes(q) ||
-      (p.slug||"").toLowerCase().includes(q)
-    )) : posts;
-
     app.innerHTML = `
       <div class="grid" style="gap:1rem">
         ${CONFIG.enableSearch ? `
         <div class="srch">
-          <input id="q" placeholder="Search posts..." value="${q.replace(/"/g,'&quot;')}">
-          <span class="chip">${filtered.length} / ${posts.length}</span>
+          <input id="q" placeholder="Search posts..." autocomplete="off" spellcheck="false">
+          <span class="chip" id="count"></span>
         </div>` : ''}
-        <div id="list" class="grid">
-          ${filtered.length ? filtered.map(p => `
-            <article class="post-card">
-              <h2><a href="#/post/${encodeURIComponent(p.slug)}">${p.title || p.slug}</a></h2>
-              <div class="muted">${fmtDate(p.date)}${p.tags?.length?` • ${p.tags.map(t=>`<span class="chip">${t}</span>`).join(' ')}`:''}</div>
-            </article>
-          `).join("") : `<div class="list-empty">No posts found.</div>`}
-        </div>
+        <div id="list" class="grid"></div>
       </div>`;
 
     const qInput = $("#q");
     if(qInput){
       qInput.addEventListener('input', (e)=>{
-        const val = e.target.value.trim().toLowerCase();
-        renderList(posts, val);
+        updateList(posts, e.target.value);
       });
+      // keep caret at end on initial focus
       qInput.focus();
+      qInput.setSelectionRange(qInput.value.length, qInput.value.length);
     }
+    updateList(posts, qInput ? qInput.value : "");
+  }
+
+  function updateList(posts, query){
+    const q = (query||"").trim().toLowerCase();
+    const filtered = q ? posts.filter(p => (
+      (p.title||"").toLowerCase().includes(q) ||
+      (p.tags||[]).join(" ").toLowerCase().includes(q) ||
+      (p.slug||"").toLowerCase().includes(q)
+    )) : posts;
+    const list = $("#list");
+    if(!list) return;
+    list.innerHTML = filtered.length ? filtered.map(p => `
+      <article class="post-card">
+        <h2><a href="#/post/${encodeURIComponent(p.slug)}">${p.title || p.slug}</a></h2>
+        <div class="muted">${fmtDate(p.date)}${p.tags?.length?` • ${p.tags.map(t=>`<span class=\"chip\">${t}</span>`).join(' ')}`:''}</div>
+      </article>
+    `).join("") : `<div class="list-empty">No posts found.</div>`;
+
+    const count = $("#count");
+    if(count) count.textContent = `${filtered.length} / ${posts.length}`;
   }
 
   async function renderPost(posts, slug, params={}){
@@ -174,7 +179,7 @@
       <article class="content">${html}</article>
     `;
 
-    // Rewrite in-post fragment links (href="#section") to router-friendly form: #/post/slug?section=section
+    // Rewrite in-post fragment links to router-friendly links
     app.querySelectorAll('.content a[href^="#"]').forEach(a=>{
       const id = a.getAttribute('href').slice(1);
       if(id){ a.setAttribute('href', `#/post/${encodeURIComponent(slug)}?section=${encodeURIComponent(id)}`); }
@@ -182,7 +187,6 @@
 
     buildTOC(slug);
 
-    // If a section param is present, scroll to it
     if(params.section){
       const target = document.getElementById(params.section);
       if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
@@ -200,7 +204,7 @@
     toc.className = 'toc';
     toc.innerHTML = '<strong>On this page</strong>' + Array.from(hs).map(h=>{
       const indent = ({H1:0,H2:12,H3:24})[h.tagName] || 0;
-      return `<div style="margin:.2rem 0 .1rem ${indent}px"><a href="#/post/${encodeURIComponent(slug)}?section=${encodeURIComponent(h.id)}">${h.textContent}</a></div>`;
+      return `<div style=\"margin:.2rem 0 .1rem ${indent}px\"><a href=\"#/post/${encodeURIComponent(slug)}?section=${encodeURIComponent(h.id)}\">${h.textContent}</a></div>`;
     }).join('');
     const h1 = app.querySelector('h1');
     if(h1) h1.insertAdjacentElement('afterend', toc);
