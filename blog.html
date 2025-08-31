@@ -41,7 +41,7 @@
 <body>
   <header>
     <div class="wrap" style="display:flex; gap:1rem; align-items:center; justify-content:space-between">
-      <a class="brand" href="#">My Markdown Blog</a>
+      <a class="brand" href="#">Research Blog</a>
       <nav><a href="#">Home</a></nav>
     </div>
   </header>
@@ -55,14 +55,14 @@
   </footer>
 
   <script>
- // --- Minimal client-side blog ---
+  // --- Minimal client-side blog ---
   // HOW IT WORKS
   // 1) You maintain /posts/posts.json that lists your markdown files.
   // 2) Each .md can optionally include simple front‑matter lines like:
   //    Title: My Post Title\nDate: 2025-08-01\nTags: notes, demo\n\n# Heading ...
   // 3) This file renders the index (list) and a post view (#/post/<slug>).
 
-    const CONFIG = {
+  const CONFIG = {
     title: "My Markdown Blog",
     postsIndex: "posts/posts.json",
     postsBase: "posts/",
@@ -107,6 +107,20 @@
 
   function setTitle(t){ document.title = t ? t + " • " + CONFIG.title : CONFIG.title; $(".brand").textContent = CONFIG.title; }
 
+  // Parse current hash into {slug, params}
+  function parseHash(){
+    const h = location.hash || '';
+    const m = h.match(/^#\/post\/([^?]+)(?:\?(.*))?/);
+    const params = {};
+    if(m && m[2]){
+      m[2].split('&').forEach(kv=>{
+        const [k,v=''] = kv.split('=');
+        params[decodeURIComponent(k)] = decodeURIComponent(v);
+      });
+    }
+    return { slug: m ? decodeURIComponent(m[1]) : null, params };
+  }
+
   function renderList(posts, q=""){
     setTitle("");
     const filtered = q ? posts.filter(p => (
@@ -142,7 +156,7 @@
     }
   }
 
-  async function renderPost(posts, slug){
+  async function renderPost(posts, slug, params={}){
     const entry = posts.find(p => p.slug === slug);
     if(!entry){ app.innerHTML = `<p>Post not found. <a href="#">Back</a></p>`; return; }
     const md = await fetchText(CONFIG.postsBase + entry.file);
@@ -156,14 +170,26 @@
     app.innerHTML = `
       <p><a class="back" href="#">← Back</a></p>
       <h1 style="margin:.2rem 0 .2rem 0">${title}</h1>
-      <div class="muted" style="margin-bottom:1rem">${fmtDate(meta.date || entry.date)}${(meta.tags?.length?meta.tags:entry.tags||[]).length?` • ${(meta.tags?.length?meta.tags:entry.tags||[]).map(t=>`<span class="chip">${t}</span>`).join(' ')}`:''}</div>
+      <div class="muted" style="margin-bottom:1rem">${fmtDate(meta.date || entry.date)}${(meta.tags?.length?meta.tags:entry.tags||[]).length?` • ${(meta.tags?.length?meta.tags:entry.tags||[]).map(t=>`<span class=\"chip\">${t}</span>`).join(' ')}`:''}</div>
       <article class="content">${html}</article>
     `;
 
-    buildTOC();
+    // Rewrite in-post fragment links (href="#section") to router-friendly form: #/post/slug?section=section
+    app.querySelectorAll('.content a[href^="#"]').forEach(a=>{
+      const id = a.getAttribute('href').slice(1);
+      if(id){ a.setAttribute('href', `#/post/${encodeURIComponent(slug)}?section=${encodeURIComponent(id)}`); }
+    });
+
+    buildTOC(slug);
+
+    // If a section param is present, scroll to it
+    if(params.section){
+      const target = document.getElementById(params.section);
+      if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
+    }
   }
 
-  function buildTOC(){
+  function buildTOC(slug){
     const content = app.querySelector('.content');
     const hs = content ? content.querySelectorAll('h1,h2,h3') : [];
     if(!hs || !hs.length) return;
@@ -173,7 +199,8 @@
     const toc = document.createElement('div');
     toc.className = 'toc';
     toc.innerHTML = '<strong>On this page</strong>' + Array.from(hs).map(h=>{
-      return `<div style="margin:.2rem 0 .1rem ${({H1:0,H2:12,H3:24})[h.tagName]}px"><a href="#${h.id}">${h.textContent}</a></div>`;
+      const indent = ({H1:0,H2:12,H3:24})[h.tagName] || 0;
+      return `<div style="margin:.2rem 0 .1rem ${indent}px"><a href="#/post/${encodeURIComponent(slug)}?section=${encodeURIComponent(h.id)}">${h.textContent}</a></div>`;
     }).join('');
     const h1 = app.querySelector('h1');
     if(h1) h1.insertAdjacentElement('afterend', toc);
@@ -185,8 +212,8 @@
       posts.sort((a,b)=> new Date(b.date||0) - new Date(a.date||0));
 
       async function router(){
-        const m = location.hash.match(/^#\/post\/([^?#]+)/);
-        if(m){ await renderPost(posts, decodeURIComponent(m[1])); }
+        const { slug, params } = parseHash();
+        if(slug){ await renderPost(posts, slug, params); }
         else { renderList(posts); }
       }
       window.addEventListener('hashchange', router);
