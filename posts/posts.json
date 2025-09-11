@@ -5,5 +5,12 @@
     "title": "Some Stuff We’ve Been Doing at UCSD",
     "date": "2024-Oct-01",
     "tags": ["intro", "welcome"]
+  },
+  {
+    "slug": "cellmate",
+    "file": "cellmate.md",
+    "title": "ceLLMate: Sandboxing Browser AI Agents",
+    "date": "2025-Sep-11",
+    "tags": ["AI", "sandboxing", "browser"]
   }
 ]
