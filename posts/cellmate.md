@@ -13,7 +13,7 @@ In this post, we introduce a sandboxing framework, [_Cellmate_](https://github.c
 A BUA comprises an LLM and a runtime environment. During its execution, the runtime utilizes a browser automation framework, such as [Playwright](https://playwright.dev), to browse and interact with websites like a human.
 At the core of a BUA is its agent loop, where the agent iteratively queries an LLM to obtain the next action and performs that action on a browser session. At each step, the agent captures the current state of the webpage, usually including a screenshot and the Document Object Model (DOM); then, it queries an LLM to select an action from a set of predefined actions. The LLM will reply with one or more actions, along with the arguments like the URL to navigate, or the index of the element to click in the DOM tree. This process is repeated until the completion of the task.
 
-<img src="images/sep-2025/bua.png" alt="BUA Diagram" style="zoom: 20%;" />
+<img src="../posts/images/sep-2025/bua.png" alt="BUA Diagram" style="zoom: 20%;" />
 
 ## Prompt Injection in BUAs
 
@@ -35,7 +35,7 @@ A fundamental challenge in sandboxing BUAs is the _semantic gap_: a concept desc
 
 For example, restricting a [browser-use agent](https://browser-use.com) to approved webpages is non-trivial: the agent exposes [19 default tools](https://github.com/browser-use/browser-use/blob/main/browser_use/tools/service.py), and navigation can be achieved in many different ways. As a preliminary test, we placed an access control check on the `go_to_url` tool, but upon encountering a permission denial, the agent bypassed it by chaining `search_google` and `click_element_with_index` (see figure below). 
 
-<img src="images/sep-2025/browser-use.png" alt="Browser-Use bypasses access control on `go_to_url` tool" style="zoom: 20%;" />
+<img src="../posts/images/sep-2025/browser-use.png" alt="Browser-Use bypasses access control on `go_to_url` tool" style="zoom: 20%;" />
 
 The root cause is that the same browser state can be reached through many different action sequences, rendering UI-level policy enforcement brittle and making comprehensive enumeration impractical. Even if we block navigation through both `go_to_url` and `click_element_by_index` via clicking a hyperlink, an attacker could still craft arbitrary JavaScript code beyond simple constructs like `<a href=some_url>`, leaving policy evaluation undefined. Even worse, UIs evolve rapidly and are often intentionally obfuscated by developers. 
 
@@ -82,13 +82,13 @@ We now describe the end-to-end workflow in Cellmate.
 
 * __Policy Enforcement.__ The approved policy is compiled into request-level rules using the domain's agent sitemap. At runtime, Cellmate launches an agent-dedicated browser session and intercepts every HTTP request, enforcing the policy with strict mediation.
 
-<img src="images/sep-2025/cellmate-workflow.png" alt="BUA Architecture Diagram" style="zoom:25%;" />
+<img src="../posts/images/sep-2025/cellmate-workflow.png" alt="BUA Architecture Diagram" style="zoom:25%;" />
 
 ## Case Study: GitLab
 
 GitLab is a web-based DevOps platform that provides Git repository management, CI/CD pipelines, and project collaboration tools. Currently, a BUA operating with an authenticated GitLab session can be tricked by prompt injection into executing actions unintended by the user. The figure below shows one such attack: the user only intends for the BUA to comment on an issue, but a malicious payload embedded in the issue description instructs the agent to create a deploy token with full account access and exfiltrate it to an attacker-controlled domain. This results in a complete account compromise.
 
-<img src="images/sep-2025/attack-gitlab.png" alt="An example prompt injection attack in a GitLab issue" style="zoom: 60%;" />
+<img src="../posts/images/sep-2025/attack-gitlab.png" alt="An example prompt injection attack in a GitLab issue" style="zoom: 60%;" />
 
 With Cellmate, we can enforce a fine-grained sandboxing policy to mitigate these risks. GitLab developers begin by supplying an agent sitemap and a set of rules as follows:
 
