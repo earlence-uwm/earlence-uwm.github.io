@@ -199,7 +199,7 @@ If you encounter any issues, please email us at [lumeng@ucsd.edu](mailto:lumeng@
 
 ## Acknowledgment
 
-We thank Prashant Kulkarni for insightful comments.
+We thank Prashant Kulkarni for insightful comments. We also thank Stefan Savage and Geoff Voelker for their naming powers.
 
 ## References
 
