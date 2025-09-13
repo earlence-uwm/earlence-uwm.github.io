@@ -197,6 +197,20 @@ Cellmate is one example of system-level defenses against prompt injection, speci
 Try [Cellmate](https://github.com/earlence-security/cellmate) today!
 If you encounter any issues, please email us at [lumeng@ucsd.edu](mailto:lumeng@ucsd.edu) or [hefeng@ucsd.edu](mailto:hefeng@ucsd.edu).
 
+## FAQ
+1. Who creates the agent sitemap and what motivation do they have?
+    - The website developer creates it. They have the best knowledge of their web server route handlers and are also motivated to ensure their website is used by agents in secure ways -- website devs are motivated to protect the security and privacy interests of their users (generally speaking)
+2. Can the agent sitemap be incomplete?
+    - Well, we would expect a website dev to know all the kinds of HTTPS requests their website is going to handle, but people do make mistakes. We are working on some ideas around creating tooling to assist website devs in automatically creating the agent sitemap.
+3. Who writes policies and what motivation do they have??
+    - We treat the website as the "application", and thus, the policies come from the website developer. They already kind of do this when creating OAuth scopes for an REST services they might expose. Cellmate is the same thing: create a set of rules/policies for various predictable use cases for someone who might access the website. In this case, it just happens that "someone" is an agent operating on behalf of a user. Examples of canned policies are easy to imagine: a read-only policy for the entire website (i.e., no state changing requests allowed), a read-write policy for most pages except the settings page, etc.
+4. How does the user apply policies?
+    - Right now, we take the user prompt and simply prompt another LLM (that doesn't see the website itself -- we do this for security reasons coz the policy predictor cannot be exposed to untrusted context) to select the most appropriate set of web domains needed to successfully execute the user's task. Then for each domain, we use the LLM to also select a minimal set of rules that are needed to complete the task. We don't know if this is the best approach yet, but it is a start. We are working on evaluations to determine how well this approach performs and also have plans on more methodical methods of binding policies to user prompts (that do not rely on simply asking another LLM).
+5. What is your threat model?
+    - We trust that the browser is secure and does not have attacker-controlled extensions installed. We do not trust the AI agent. 
+6. Can the attacker issue their own HTTP requests to evade your policy mechanism?
+    - That would imply that the attacker has some type of code execution in the context of the browser. This generally means something like a XSS/CSRF attack. In that case, you have bigger problems. Barring that, the attacker's only capability is clicking/manipulating the website like a human. This does not allow them to issue custom HTTP requests just like a human user cannot issue custom HTTP requests unless they access advanced browser functionality (e.g., developer console). As a standard policy, we don't allow an agent to access these parts of the browser, and neither should any web agent developer honestly.
+
 ## Acknowledgment
 
 We thank Prashant Kulkarni for insightful comments. We also thank Stefan Savage and Geoff Voelker for their naming powers.
