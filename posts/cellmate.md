@@ -3,6 +3,7 @@ Date: 2026-09-06
 Tags: ucsd, research, security, llm, agent
 
 # ceLLMate: Sandboxing Browser AI Agents
+### Luoxi Meng, Henry Feng, Earlence Fernandes
 
 Browser-use agents (BUAs) are emerging as a new class of autonomous agents that interact with web browsers in human-like ways, such as clicking, scrolling, filling forms, and navigating across multiple pages. Examples include [Browser-Use](https://browser-use.com), [Amazon Nova Act](https://nova.amazon.com/act), [OpenAI Operator](https://openai.com/index/introducing-operator), [Google Project Mariner](https://deepmind.google/models/project-mariner), and [Perplexity's Comet](https://www.perplexity.ai/comet). Although these agents empower people to automate repetitive online tasks, they are vulnerable to prompt injections that allow an attacker to trick an agent into performing undesirable actions, such as leaking private information or issuing state-changing requests to the website. The ability of malicious actors to commandeer these agents poses an unprecedented threat to user privacy and web security, demanding urgent development of injection-resistant architectures.
 
