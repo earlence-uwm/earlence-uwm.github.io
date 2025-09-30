@@ -12,5 +12,12 @@
     "title": "ceLLMate: Sandboxing Browser AI Agents",
     "date": "2025-Sep-11",
     "tags": ["AI", "sandboxing", "browser"]
+  },
+  {
+    "slug": "gemini-in-chrome",
+    "file": "gemini-in-chrome.md",
+    "title": "Reverse engineering notes on Gemini-in-Chrome",
+    "date": "2025-Sep-30",
+    "tags": ["AI", "chrome", "gemini"]
   }
 ]
