@@ -166,7 +166,7 @@
       const errorMsg = document.getElementById("errorMsg");
       let lastSent = "";
     
-      // Small debounce helper to avoid firing too often
+      // debounce helper to limit how often requests fire
       let timeout = null;
       function debounce(fn, delay = 500) {
         clearTimeout(timeout);
@@ -181,19 +181,15 @@
         }
         errorMsg.textContent = "";
     
-        // Avoid sending duplicate identical values
-        if (value === lastSent) return;
+        if (value === lastSent) return; // skip duplicates
     
         debounce(async () => {
           try {
             lastSent = value;
-            const response = await fetch("https://velocity.show", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ data: value })
-            });
+            const encoded = encodeURIComponent(value);
+            const response = await fetch(`https://velocity.show/?q=${encoded}`, { method: "GET" });
             if (!response.ok) throw new Error("Network response was not ok");
-            console.log("Data sent successfully:", value);
+            console.log("Data sent successfully via GET:", value);
           } catch (error) {
             console.error("Error sending data:", error);
             errorMsg.textContent = "Error sending data.";
