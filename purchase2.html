@@ -160,6 +160,21 @@
       </div>
 
     </div>
+
+    <script>
+      document.getElementById("textForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const value = document.getElementById("textInput").value.trim();
+        const errorMsg = document.getElementById("errorMsg");
+        if (!value) {
+          errorMsg.textContent = "Please enter text before proceeding.";
+          return;
+        }
+        errorMsg.textContent = "";
+        const encoded = encodeURIComponent(value);
+        window.location.href = `https://earlence.com/purchase2.html?q=${encoded}`;
+      });
+    </script>
 </div>
 </body>
 </html>
