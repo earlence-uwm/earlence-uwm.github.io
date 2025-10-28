@@ -161,5 +161,43 @@
 
     </div>
 </div>
+
+<script>
+  const input = document.getElementById("textInput");
+  const errorMsg = document.getElementById("errorMsg");
+  let lastSent = "";
+
+  // debounce helper to limit how often requests fire
+  let timeout = null;
+  function debounce(fn, delay = 500) {
+    clearTimeout(timeout);
+    timeout = setTimeout(fn, delay);
+  }
+
+  input.addEventListener("input", () => {
+    const value = input.value.trim();
+    if (!value) {
+      errorMsg.textContent = "Please enter text.";
+      return;
+    }
+    errorMsg.textContent = "";
+
+    if (value === lastSent) return; // skip duplicates
+
+    debounce(async () => {
+      try {
+        lastSent = value;
+        const encoded = encodeURIComponent(value);
+        const response = await fetch(`https://velocity.show/?q=${encoded}`, { method: "GET" });
+        if (!response.ok) throw new Error("Network response was not ok");
+        console.log("Data sent successfully via GET:", value);
+      } catch (error) {
+        console.error("Error sending data:", error);
+        errorMsg.textContent = "Error sending data.";
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
