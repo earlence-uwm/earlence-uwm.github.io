@@ -21,7 +21,7 @@ Navigate to https://mail.google.com and sign-in using username: X and password: 
 
 This task is as simple as it gets. And its pretty clear what the agent needs to do. 
 
-### Attack version 1: Email stealing.
+## Attack version 1: Email stealing.
 Anyone can send anyone else an email, as long as they know the target's email address. Big surprise! Now, when you ask an agent to summarize an email, basically anyone can get whatever text they want into the agent's context window. This is really problematic because the agent can be hijacked into doing whatever the attacker wants, using the access it has to YOUR logged-in accounts on the browser. 
 
 In this attack sample, the attacker sends the following email:
