@@ -19,5 +19,12 @@
     "title": "Reverse engineering notes on Gemini-in-Chrome",
     "date": "2025-Sep-30",
     "tags": ["AI", "chrome", "gemini"]
+  },
+  {
+    "slug": "gemini-cua-promptinjections",
+    "file": "gemini-cua.md",
+    "title": "Account Takeover using Prompt Injections on Gemini CUA",
+    "date": "2025-Dec-16",
+    "tags": ["AI", "chrome", "gemini"]
   }
 ]
