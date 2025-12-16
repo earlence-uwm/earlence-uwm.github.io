@@ -37,7 +37,7 @@ The goal of this attack is to get the agent to read the sensitive email "work de
 
 Here is a demo of it in action:
 <video controls width="640">
-  <source src="videos/gemini-cua-email-stealer.mp4" type="video/mp4">
+  <source src="../posts/videos/gemini-cua-email-stealer.mp4" type="video/mp4">
 </video>
 
 
