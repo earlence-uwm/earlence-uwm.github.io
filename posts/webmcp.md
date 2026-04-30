@@ -13,7 +13,7 @@ This posts documents how prompt injections can violate the same origin policy wh
 ## Scenario
 WebMCP includes a simplistic "agent" to test out the Chrome-integrated implementation (Version 146.0.7672.0 or higher, chrome://flags/#enable-webmcp-testing). This agent is a Chrome extension that does simple stuff like listing the WebMCP endpoints discovered on the page. It connects with Gemini 2.5 Flash to create an agent that you can prompt. Here is a screenshot of it in action when you browse to the [FlightSearch WebMCP demo](https://googlechromelabs.github.io/webmcp-tools/demos/react-flightsearch/) from Google. 
 
-![WebMCP-Inspector Tool from Google that doubles as a simplistic Agent with Gemini 2.5](../images/apr-2026/webmcp-inspector.png)
+![WebMCP-Inspector Tool from Google that doubles as a simplistic Agent with Gemini 2.5](../posts/images/apr-2026/webmcp-inspector.png)
 
 You put in a Gemini API key, and you can prompt the agent to operate the website for you. Under the hood, this tool can read the WebMCP functions and call them. The WebMCP standard does not mandate any rules about how an agent should work, and this makes sense, because WebMCP is only a standard for defining JavaScript functions in a webpage. 
 
@@ -64,8 +64,7 @@ Now, an agent can choose to not retain context across domains/tabs. The WebMCP-i
 ## Disclosure
 - We disclosed this to Google on 20th April 2026.
 
-- Google responded on 24th April,  saying: "We’ve reviewed this issue and determined it is out of scope for this extension. As a debugging tool for web developers, it does not implement production-level security boundaries for cross-domain prompt injection. As suggested by Nathan, I'll update the extension description to make it clear.
-
-FYI resetting sessions on tab changes would currently break some developer workflows." (By extension, they mean their WebMCP-inspector tool that also functions as a simple agent hooked up to Gemini 2.5 Flash.) As I said earlier, "production-level security boundaries for cross-domain prompt injection" is pretty weak. You cannot base the strength of the core tenet of browser security policy on some probabilistic defense that crumbles under a determined attacker. 
+- Google responded on 24th April,  saying: "We’ve reviewed this issue and determined it is out of scope for this extension. As a debugging tool for web developers, it does not implement production-level security boundaries for cross-domain prompt injection. As suggested by Nathan, I'll update the extension description to make it clear. FYI resetting sessions on tab changes would currently break some developer workflows." 
+- - (By extension, they mean their WebMCP-inspector tool that also functions as a simple agent hooked up to Gemini 2.5 Flash.) As I said earlier, "production-level security boundaries for cross-domain prompt injection" is pretty weak. You cannot base the strength of the core tenet of browser security policy on some probabilistic defense that crumbles under a determined attacker. 
 
 - In the interest of public information, we have made this post public on 30th April 2026. 
