@@ -13,7 +13,7 @@ This posts documents how prompt injections can violate the same origin policy wh
 ## Scenario
 WebMCP includes a simplistic "agent" to test out the Chrome-integrated implementation (Version 146.0.7672.0 or higher, chrome://flags/#enable-webmcp-testing). This agent is a Chrome extension that does simple stuff like listing the WebMCP endpoints discovered on the page. It connects with Gemini 2.5 Flash to create an agent that you can prompt. Here is a screenshot of it in action when you browse to the [FlightSearch WebMCP demo](https://googlechromelabs.github.io/webmcp-tools/demos/react-flightsearch/) from Google. 
 
-![WebMCP-Inspector Tool from Google that doubles as a simplistic Agent with Gemini 2.5](images/apr-2026/webmcp-inspector.png)
+![WebMCP-Inspector Tool from Google that doubles as a simplistic Agent with Gemini 2.5](../images/apr-2026/webmcp-inspector.png)
 
 You put in a Gemini API key, and you can prompt the agent to operate the website for you. Under the hood, this tool can read the WebMCP functions and call them. The WebMCP standard does not mandate any rules about how an agent should work, and this makes sense, because WebMCP is only a standard for defining JavaScript functions in a webpage. 
 
@@ -49,9 +49,8 @@ So, if the user goes to the attacker's webpage and interacts with it, then the m
 
 Here is a demo video:
 
-<video controls width="640">
-  <source src="https://www.loom.com/embed/993969c37a9848828855c0276b7cc8a2" type="video/mp4">
-</video>
+
+<div style="position: relative; padding-bottom: 52.81250000000001%; height: 0;"><iframe src="https://www.loom.com/embed/993969c37a9848828855c0276b7cc8a2" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 ## Analysis
 
