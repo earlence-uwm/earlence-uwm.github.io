@@ -26,5 +26,12 @@
     "title": "Account Takeover using Prompt Injections on Gemini CUA",
     "date": "2025-Dec-16",
     "tags": ["AI", "chrome", "gemini"]
+  },
+  {
+    "slug": "webmcp-sameorigin",
+    "file": "webmcp.md",
+    "title": "Violating Same Origin Policy by Misusing WebMCP",
+    "date": "2026-Apr-30",
+    "tags": ["AI", "webmcp"]
   }
 ]
