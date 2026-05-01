@@ -71,6 +71,6 @@ In my opinion, this isn't technically a break of same origin policy. But it brea
 - I disclosed this to Google on 20th April 2026.
 
 - Google responded on 24th April,  saying: "We’ve reviewed this issue and determined it is out of scope for this extension. As a debugging tool for web developers, it does not implement production-level security boundaries for cross-domain prompt injection. As suggested by REDACTED, I'll update the extension description to make it clear. FYI resetting sessions on tab changes would currently break some developer workflows." 
-  + (By extension, they mean their WebMCP-inspector tool that also functions as a simple agent hooked up to Gemini 2.5 Flash.) As I said earlier, "production-level security boundaries for cross-domain prompt injection" is pretty weak. You cannot base the strength of the core tenet of browser security policy on some probabilistic defense that crumbles under a determined attacker. 
+  + By "extension," Google means their WebMCP-inspector tool that also functions as a simple agent hooked up to Gemini 2.5 Flash. As I said earlier, "production-level security boundaries for cross-domain prompt injection" is pretty weak. You cannot base the strength of the core tenet of browser security policy on some probabilistic defense that crumbles under a determined attacker. 
 
 - In the interest of public information, I have made this post public on 30th April 2026. 
