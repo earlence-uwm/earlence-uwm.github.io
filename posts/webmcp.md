@@ -63,7 +63,7 @@ However, LLMs are pretty good at following instructions. You can still poison th
 
 Now, an agent can choose to not retain context across domains/tabs. The WebMCP-inspector tool has a nifty "reset" button as well. However, this is just advice and it can break workflows that need cross-context information. And as with all "security advice", interpretation is left to the reader.  Just look at the mess with OAuth scopes. They were left to the designer with some security advice.  I don't know if WebMCP should specify rules on whether the agent should retain context or not, but it seems like an unlikely thing. There are so many agent implementations out there. 
 
-## Does this break the same origin policy.
+## Does this break the same origin policy?
 In my opinion, this isn't technically a break of same origin policy. But it breaks the philosophy of what we want from the same origin policy. The browser is doing what its supposed to and isolates the different pages. The attack flows through the agent because it carries context across pages. The agent is a piece of software, but it exists outside the browser. I think a more accurate description is that the same origin policy isn't enough when browser agents interact with the web. We need to come up with some other security principle. 
 
 
