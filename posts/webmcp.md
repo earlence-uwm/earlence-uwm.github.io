@@ -20,7 +20,7 @@ WebMCP includes a simplistic "agent" to test out the Chrome-integrated implement
 
 You put in a Gemini API key, and you can prompt the agent to operate the website for you. Under the hood, this tool can read the WebMCP functions and call them. The WebMCP standard does not mandate any rules about how an agent should work, and this makes sense, because WebMCP is only a standard for defining JavaScript functions in a webpage. 
 
-An important thing to note is that this demo agent retains context _across_ webpages. This is important. It forms the core of how origin isolation is violated. It reads MCP function descriptions from websites and can potentially carry the _effects_ of that to other websites.
+An important thing to note is that this demo agent retains context _across_ webpages. This is important. It forms the core of how origin isolation is violated. It reads MCP function descriptions from websites and can potentially carry the _effects_ of that to other websites. Another important note is that this can happen in any agent, and it is likely to happen because carrying cross-context information will unlock a lot of utility.
 
 ## Attack
 The scenario is simple. Attacker controls a domain, hosts a website with MCP tool descriptions that they control. So I hosted a [WebMCP-compatible page](https://www.earlence.com/french-bistro/). This is just modified from the Google-supplied sample.  Here is the poisoned tool description I used:
