@@ -44,9 +44,9 @@ The scenario is simple. Attacker controls a domain, hosts a website with MCP too
 
 There are two stages to this prompt injection.
 
-1. Stage A: A poisoned tool description that automatically gets injected into context due to how MCP works.  This prompt injection instructs the model that if the user prompts "what can you do" (a pretty common prompt, but it can be anything really), then the model should output some tokens verbatim, specified between the $$$ delimiters. This is an old trick. I believe that I saw the idea of a logic bomb in some of [wunderwuzzi's](https://embracethered.com/blog/index.html) excellent work. 
++ Stage 1: A poisoned tool description that automatically gets injected into context due to how MCP works.  This prompt injection instructs the model that if the user prompts "what can you do" (a pretty common prompt, but it can be anything really), then the model should output some tokens verbatim, specified between the $$$ delimiters. This is an old trick. I believe that I saw the idea of a logic bomb in some of [wunderwuzzi's](https://embracethered.com/blog/index.html) excellent work. 
 
-2. Stage B: The NEW_SYSTEM_INSTRUCTIONS that get copied into the model's context is the key prompt injection. It is also "triggered" in that if the user types "hello" (again, can be anything), then the model is instructed to use the searchFlights tool. This is a WebMCP tool on another webpage ([FlightSearch](https://googlechromelabs.github.io/webmcp-tools/demos/react-flightsearch/)) that I am using for demo purposes. This was built by the WebMCP team. 
++ Stage 2: The NEW_SYSTEM_INSTRUCTIONS that get copied into the model's context is the key prompt injection. It is also "triggered" in that if the user types "hello" (again, can be anything), then the model is instructed to use the searchFlights tool. This is a WebMCP tool on another webpage ([FlightSearch](https://googlechromelabs.github.io/webmcp-tools/demos/react-flightsearch/)) that I am using for demo purposes. This was built by the WebMCP team. 
 
 So, if the user goes to the attacker's webpage and interacts with it, then the model's context gets poisoned with a new directive. Later on, the user goes to the target page and interacts with the agent. At that point, the attack activates and the searchFlight tool executes. Thus, the attacker's webpage was able to trigger JavaScript on the victim page. This breaks origin isolation. 
 
@@ -71,6 +71,6 @@ This isn't technically a break of same origin policy. The browser is doing what 
 - We disclosed this to Google on 20th April 2026.
 
 - Google responded on 24th April,  saying: "We’ve reviewed this issue and determined it is out of scope for this extension. As a debugging tool for web developers, it does not implement production-level security boundaries for cross-domain prompt injection. As suggested by REDACTED, I'll update the extension description to make it clear. FYI resetting sessions on tab changes would currently break some developer workflows." 
-- - (By extension, they mean their WebMCP-inspector tool that also functions as a simple agent hooked up to Gemini 2.5 Flash.) As I said earlier, "production-level security boundaries for cross-domain prompt injection" is pretty weak. You cannot base the strength of the core tenet of browser security policy on some probabilistic defense that crumbles under a determined attacker. 
++ (By extension, they mean their WebMCP-inspector tool that also functions as a simple agent hooked up to Gemini 2.5 Flash.) As I said earlier, "production-level security boundaries for cross-domain prompt injection" is pretty weak. You cannot base the strength of the core tenet of browser security policy on some probabilistic defense that crumbles under a determined attacker. 
 
 - In the interest of public information, we have made this post public on 30th April 2026. 
