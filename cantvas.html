@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Can’tVas LMS</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #eef2f7;
+      color: #1e293b;
+    }
+
+    .topbar {
+      height: 62px;
+      background: linear-gradient(90deg, #d91f26, #ff6b00);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+
+    .brand .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: white;
+      color: #d91f26;
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+      transform: rotate(-10deg);
+      border: 4px solid rgba(255,255,255,0.5);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .top-actions button {
+      border: none;
+      background: rgba(255,255,255,0.18);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 82px 1fr 320px;
+      min-height: calc(100vh - 62px);
+    }
+
+    .sidebar {
+      background: #111827;
+      color: white;
+      padding-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .nav-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.08);
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+      position: relative;
+    }
+
+    .nav-icon:hover {
+      transform: scale(1.07) rotate(2deg);
+      background: rgba(255,255,255,0.18);
+    }
+
+    .notif {
+      position: absolute;
+      top: -5px;
+      right: -4px;
+      background: red;
+      color: white;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+
+    .main {
+      padding: 24px;
+      overflow: auto;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #ffffff, #fff4df);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "ACCREDITED-ish";
+      position: absolute;
+      right: -28px;
+      top: 18px;
+      transform: rotate(18deg);
+      background: red;
+      color: white;
+      padding: 10px 34px;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .hero h1 {
+      margin-top: 0;
+      font-size: 2.2rem;
+    }
+
+    .hero p {
+      max-width: 700px;
+      line-height: 1.5;
+      color: #475569;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+      transition: 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-4px) rotate(-0.4deg);
+    }
+
+    .course-tag {
+      display: inline-block;
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      margin-bottom: 12px;
+      font-weight: bold;
+    }
+
+    .progress {
+      height: 14px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, #ff0000, #ffae00);
+    }
+
+    .status {
+      margin-top: 12px;
+      font-size: 0.92rem;
+      color: #64748b;
+    }
+
+    .rightbar {
+      background: #f8fafc;
+      border-left: 1px solid #dbe4ef;
+      padding: 22px;
+      overflow: auto;
+    }
+
+    .widget {
+      background: white;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+
+    .widget h3 {
+      margin-top: 0;
+    }
+
+    .announcement {
+      padding: 12px;
+      border-radius: 12px;
+      background: #fff8e7;
+      border-left: 6px solid orange;
+      margin-bottom: 12px;
+    }
+
+    .grade {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px dashed #cbd5e1;
+    }
+
+    .panic-button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #dc2626, #f97316);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      animation: pulse 1.2s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.03); }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111827;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 12px;
+      display: none;
+      z-index: 1000;
+      font-weight: bold;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .ai-warning {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      margin-top: 12px;
+      border: 1px dashed #dc2626;
+    }
+
+    .discussion-post {
+      background: #f1f5f9;
+      border-radius: 14px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .discussion-post strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 1100px) {
+      .layout {
+        grid-template-columns: 82px 1fr;
+      }
+
+      .rightbar {
+        display: none;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">🎓</div>
+      Can’tVas LMS
+    </div>
+
+    <div class="top-actions">
+      <button onclick="fakeSync()">Sync Grades</button>
+      <button onclick="panic()">Academic Panic</button>
+      <button onclick="aiProctor()">Enable AI Proctor</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="nav-icon">🏠</div>
+      <div class="nav-icon">📚<div class="notif">12</div></div>
+      <div class="nav-icon">📅</div>
+      <div class="nav-icon">📈</div>
+      <div class="nav-icon">💬<div class="notif">99+</div></div>
+      <div class="nav-icon">⚙️</div>
+      <div class="nav-icon">😭</div>
+    </aside>
+
+    <main class="main">
+      <section class="hero">
+        <h1>Welcome back, Earlence.</h1>
+        <p>
+          Your educational experience has been optimized by 14 disconnected SaaS vendors,
+          6 third-party plugins, and one mysterious LTI integration written in 2013.
+        </p>
+
+        <div class="ai-warning">
+          ⚠️ AI Integrity Scanner detected “suspiciously coherent writing” in your discussion post.
+          Confidence: 14%.
+        </div>
+      </section>
+
+      <div class="cards">
+        <div class="card">
+          <div class="course-tag">CSE 291</div>
+          <h2>Advanced Agent Security</h2>
+          <p>Assignment 4: Build a formally verified excuse for missing Assignment 3.</p>
+          <div class="progress"><span style="width: 82%"></span></div>
+          <div class="status">82% complete • emotionally incomplete</div>
+        </div>
+
+        <div class="card">
+          <div class="course-tag">CSE 227</div>
+          <h2>Prompt Injection Kung Fu</h2>
+          <p>Quiz average: 94%. LMS confidence that you learned anything: 3%.</p>
+          <div class="progress"><span style="width: 94%"></span></div>
+          <div class="status">One unread announcement titled “Please Read”.</div>
+        </div>
+
+        <div class="card">
+          <div class="course-tag">MATH 404</div>
+          <h2>Applied Academic Suffering</h2>
+          <p>Final project peer review contains only the sentence “interesting direction”.</p>
+          <div class="progress"><span style="width: 56%"></span></div>
+          <div class="status">Canvas detected elevated confusion.</div>
+        </div>
+
+        <div class="card">
+          <div class="course-tag">HUM 101</div>
+          <h2>Corporate Wellness Through PDFs</h2>
+          <p>Mandatory reflection post due in 3 minutes.</p>
+          <div class="progress"><span style="width: 7%"></span></div>
+          <div class="status">Professor has uploaded 93 files named FINAL_v2.pdf</div>
+        </div>
+      </div>
+    </main>
+
+    <aside class="rightbar">
+      <div class="widget">
+        <h3>Announcements</h3>
+
+        <div class="announcement">
+          The LMS will undergo scheduled maintenance during finals week for maximum emotional impact.
+        </div>
+
+        <div class="announcement">
+          We are excited to announce discussion boards now support NFTs for participation credit.
+        </div>
+
+        <div class="announcement">
+          Respondus Lockdown Browser now also locks down your soul.
+        </div>
+      </div>
+
+      <div class="widget">
+        <h3>Grade Summary</h3>
+
+        <div class="grade"><span>Homework</span><strong>A-</strong></div>
+        <div class="grade"><span>Participation</span><strong>VIBES</strong></div>
+        <div class="grade"><span>Midterm</span><strong>???</strong></div>
+        <div class="grade"><span>Attendance</span><strong>algorithmic</strong></div>
+      </div>
+
+      <div class="widget">
+        <h3>Discussion Board</h3>
+
+        <div class="discussion-post">
+          <strong>student_4721</strong>
+          does anyone understand lecture 8
+        </div>
+
+        <div class="discussion-post">
+          <strong>TA_Mike_FINAL</strong>
+          Please direct all questions to Piazza.
+        </div>
+
+        <div class="discussion-post">
+          <strong>student_4721</strong>
+          piazza says to ask here
+        </div>
+      </div>
+
+      <button class="panic-button" onclick="panic()">
+        Submit Empty Assignment
+      </button>
+    </aside>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const toast = document.getElementById('toast');
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      clearTimeout(window.toastTimeout);
+      window.toastTimeout = setTimeout(() => {
+        toast.style.display = 'none';
+      }, 2400);
+    }
+
+    function fakeSync() {
+      const msgs = [
+        'Sync failed because the registrar sneezed.',
+        'Grades synced with low confidence.',
+        'Canvas detected “academic turbulence”.',
+        'LTI provider returned emotional damage.'
+      ];
+
+      showToast(msgs[Math.floor(Math.random() * msgs.length)]);
+    }
+
+    function panic() {
+      document.body.style.filter = 'hue-rotate(160deg) saturate(1.4)';
+
+      setTimeout(() => {
+        document.body.style.filter = '';
+      }, 1200);
+
+      showToast('Assignment submitted successfully with 0 attached files.');
+    }
+
+    function aiProctor() {
+      const warnings = [
+        'AI Proctor detected suspicious eye movement toward the concept of learning.',
+        'Webcam analysis suggests “independent thought”.',
+        'Keyboard cadence inconsistent with approved suffering patterns.',
+        'Academic Integrity AI has become self-aware.'
+      ];
+
+      showToast(warnings[Math.floor(Math.random() * warnings.length)]);
+    }
+  </script>
+</body>
+</html>
