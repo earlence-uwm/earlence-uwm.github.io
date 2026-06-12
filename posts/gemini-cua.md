@@ -1,5 +1,5 @@
 Title: Account Takeover using Prompt Injections on Gemini Computer Use Agent
-Date: 2026-12-16
+Date: 2025-12-17
 Tags: ucsd, research, browser-use, prompt-injection
 
 # Simple Prompt Injections on Gemini Computer Use Agent
