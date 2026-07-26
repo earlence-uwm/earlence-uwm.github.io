@@ -33,5 +33,12 @@
     "title": "Breaking Origin Isolation without Breaking the Browser",
     "date": "2026-Apr-30",
     "tags": ["AI", "webmcp"]
+  },
+  {
+    "slug": "model-vs-system",
+    "file": "model-vs-system.md",
+    "title": "Have prompt injections been solved at the model level?",
+    "date": "2026-Jul-25",
+    "tags": ["AI", "systems"]
   }
 ]
