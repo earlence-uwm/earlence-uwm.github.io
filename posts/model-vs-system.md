@@ -14,10 +14,12 @@ You need both types of defensive layers because their failures are different. Le
 
 A systems-level defense fails in two different ways: the security policy has a gap, or the enforcement mechanism has an implementation bug. For the first failure mode, the prompt injection attacker must have knowledge of what policy is enforced and then determine whether there is any gap that will let them achieve their goals. If there is a gap, then they can search for a prompt injection to exploit the gap. For example, if we have a stateless policy system with a policy that says, ``the agent may only purchase stuff on amazon that is less than 50 dollars.'' The gap is that this policy allows multiple purchases individually less than 50 dollars but accumulate to much more than 50. The attacker can notice this and craft their prompt injection appropriately. However, if the policy system was stateful, then there is no prompt injection that would ever cause a violation. This illustrates an important point: a systems-level guardrail is dependent critically on policy expressivity and specification correctness. 
 
-For the second failure mode, the attacker has to find and exploit an implementation bug in the systems-level defense. I do not know of a prompt injection attacker who can achieve this yet: hijack a capable model and give it the task of exploiting a vulnerability in a systems-level guardrail around it. It seems pretty complex because the attacker has to achieve prompt injection AND jailbreaking for a long-range task. Jailbreaking is necessary because most models will have some alignment that prevent the model from engaging in behavior like hacking a sandbox. But, there's another attacker here: the model itself engages in reward hacking to evade its system-level guardrails. This has happened, with the [OpenAI-HuggingFace incident](https://openai.com/index/hugging-face-model-evaluation-security-incident/). 
+For the second failure mode, the attacker has to find and exploit an implementation bug in the systems-level defense. I do not know of a prompt injection attacker who can achieve this yet: hijack a capable model and give it the task of exploiting a vulnerability in a systems-level guardrail around it. This seems pretty complex because the attacker has to achieve prompt injection AND jailbreaking for a long-range task. Jailbreaking is necessary because most models will have some alignment that prevent the model from engaging in behavior like hacking a sandbox. 
+
+But, there's another attacker here: the model itself engages in reward hacking to evade its system-level guardrails. This has happened, with the [OpenAI-HuggingFace incident](https://openai.com/index/hugging-face-model-evaluation-security-incident/). More on this later.
 
 
-To summarize, we should aim to blend the model-level and systems-level guardrails in such a way that the attacker has to exploit two different failure modes to achieve full system compromise. A bunch of work needs to be done to investigate how to do this for realistic agents. I can think of one situation where this can work.
+To summarize, we should aim to blend the model-level and systems-level guardrails in such a way that the attacker has to exploit two different failure modes to achieve full system compromise. A bunch of work needs to be done to investigate how to do this for realistic agents. I can think of one situation where this can work. I describe this next.
 
 ## Systems-level guardrails establish envelopes, model-level guardrails control fine-grained behavior
 
@@ -37,19 +39,19 @@ Let's revisit the Amazon example above for a moment. The fix was to change the e
 
 ## You need systems-level guardrails even if there isn't a prompt injection
 
-I am going to claim that even if there isn’t a prompt injection attacker, you will still benefit from systems-level guardrails. As evidence, let’s consider the incident where an OpenAI model escaped its sandbox and hacked HuggingFace to steal an answer to a benchmark it was being evaluated upon. The model has engaged in reward hacking here. What is the line of defense against this behavior? Alignment is one, and it keeps getting better, but again, alignment can and does fail in unpredictable ways. 
+I am going to claim that even if there isn’t a prompt injection attacker, you will still benefit from systems-level guardrails. As evidence, let’s consider the incident where an OpenAI model escaped its sandbox and hacked HuggingFace to steal an answer to a benchmark it was being evaluated upon. The model has engaged in reward hacking. What is the line of defense against this behavior? Alignment is one, and it keeps getting better, but again, alignment can and does fail in unpredictable ways. 
 
-A systems-layer of defense would be valuable to have. But, in this particular incident, there was a systems-layer defense — the sandbox that the agent broke out of! Counter-intuitively, I think this is where systems-level techniques can shine. Particularly, formal verification of systems implementations has made progress in leaps and bounds — seL4, CompCert, Everest are formally verified implementations of complex software. We need a formally-verified sandboxing system. Although formal verification also relies on having complete specifications, notice that these specifications are  different than security policy specifications for agentic tasks. A sandbox specification is a fairly static thing — ensure that the sandboxed software has no way to take actions that violate a given policy. 
+A systems-layer defense would be valuable to have! But, in this particular incident, there was a systems-layer defense — the sandbox that the agent broke out of! I think the issue is that the systems-level defense needs to be implemented correctly. Particularly, formal verification of systems implementations has made progress in leaps and bounds — seL4, CompCert, Everest are formally verified implementations of complex software. We need formally-verified systems-level guardrails! Although formal verification also relies on having complete specifications, notice that these specifications are  different than security policy specifications for agentic tasks. A sandbox specification is a fairly static thing — ensure that the sandboxed software has no way to take actions that violate a given policy. 
 
 ## Summary
 
 Here is a table that organizes the various failure modes discussed above:
 
-| Failure mode | Patching | Stronger attacker? | Formal verification helps? |
-|---|---|---|---|
-| Model defense: OOD input | Non-monotone (rephrasings regress it) | Yes | No — no formal spec exists |
-| Systems: policy gap | Monotone for that gap | No, if the policy covers the action | No — spec *is* the problem |
-| Systems: implementation bug | Monotone | **Yes** — bug-finding is search, and search scales with capability | **Yes** — this is the seL4 case |
+| Failure mode                | Patching                  | Stronger attacker evades?    | Formal verification helps? |
+| --------------------------- | ------------------------- | ---------------------------- | -------------------------- |
+| Model defense: OOD input    | Non-monotone              | Yes                          | No — no formal spec exists |
+| Systems: policy gap         | Monotone, for that gap    | No, if the policy covers it  | No — the spec *is* the gap |
+| Systems: implementation bug | Monotone                  | Yes — bug-finding is search  | Yes — the seL4 case        |
 
 So, here is what I think needs to happen:
 
