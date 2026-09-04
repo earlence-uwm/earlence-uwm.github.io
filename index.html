@@ -3,50 +3,278 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ICSI Meeting Files</title>
+<title>ICSI Meeting Transcripts &mdash; Subsampled Dataset</title>
 <style>
-  :root { color-scheme: light dark; }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; min-height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: #f6f7f9; color: #1b1f24;
+  :root{
+    color-scheme: light dark;
+    --bg:#f4f6f9; --panel:#ffffff; --ink:#12161c; --muted:#5b6672;
+    --line:#e4e8ee; --brand:#b21f24; --brand-ink:#8f181c; --accent:#2f6df6;
+    --chip:#eef1f6; --shadow:0 10px 34px rgba(18,22,28,.07);
   }
-  @media (prefers-color-scheme: dark) {
-    body { background: #0f1216; color: #e6e9ed; }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0e1116; --panel:#161b22; --ink:#e8ecf1; --muted:#9aa4b2;
+      --line:#252c35; --brand:#e8474d; --brand-ink:#f07176; --accent:#5b8bff;
+      --chip:#1d232c; --shadow:0 10px 34px rgba(0,0,0,.45);
+    }
   }
-  .card {
-    background: #fff; border: 1px solid #e3e6ea; border-radius: 16px;
-    padding: 40px 44px; max-width: 460px; width: calc(100% - 32px);
-    box-shadow: 0 8px 30px rgba(0,0,0,.06); text-align: center;
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
   }
-  @media (prefers-color-scheme: dark) {
-    .card { background: #171b21; border-color: #262c34; box-shadow: 0 8px 30px rgba(0,0,0,.4); }
+  .wrap{max-width:860px; margin:0 auto; padding:0 22px}
+
+  /* ---- top bar ---- */
+  header.bar{
+    position:sticky; top:0; z-index:5; backdrop-filter:saturate(1.6) blur(8px);
+    background:color-mix(in srgb, var(--bg) 82%, transparent);
+    border-bottom:1px solid var(--line);
   }
-  h1 { margin: 0 0 6px; font-size: 22px; letter-spacing: -.01em; }
-  p.sub { margin: 0 0 28px; color: #6b7280; font-size: 14px; }
-  @media (prefers-color-scheme: dark) { p.sub { color: #9aa4b2; } }
-  a.btn {
-    display: inline-block; text-decoration: none;
-    background: #2f6df6; color: #fff; font-weight: 600; font-size: 15px;
-    padding: 14px 30px; border-radius: 10px; border: none; cursor: pointer;
-    transition: background .15s ease, transform .05s ease;
+  .bar .wrap{display:flex; align-items:center; gap:12px; height:60px}
+  .brandmark{display:flex; align-items:center; gap:11px; text-decoration:none; color:inherit}
+  .emblem{width:34px;height:34px;flex:0 0 auto}
+  .brandmark b{font-size:15px; letter-spacing:.02em}
+  .brandmark span{display:block; font-size:11px; color:var(--muted); font-weight:500; letter-spacing:.01em}
+  .bar .spacer{flex:1}
+  .bar a.jump{color:var(--muted); text-decoration:none; font-size:13px; margin-left:18px}
+  .bar a.jump:hover{color:var(--ink)}
+  @media (max-width:640px){ .bar a.jump{display:none} }
+
+  /* ---- hero ---- */
+  .hero{padding:56px 0 40px; border-bottom:1px solid var(--line)}
+  .kicker{
+    display:inline-block; font-size:12px; font-weight:700; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--brand); margin-bottom:14px;
   }
-  a.btn:hover { background: #245bd6; }
-  a.btn:active { transform: translateY(1px); }
-  .meta { margin-top: 22px; font-size: 12.5px; color: #9099a3; }
-  .meta code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  h1{margin:0 0 14px; font-size:34px; line-height:1.15; letter-spacing:-.02em}
+  .lede{font-size:17px; color:var(--muted); max-width:60ch; margin:0 0 28px}
+  .badge{
+    display:inline-flex; align-items:center; gap:8px; background:var(--chip);
+    border:1px solid var(--line); color:var(--muted); border-radius:999px;
+    padding:5px 13px; font-size:12.5px; font-weight:600; margin-bottom:26px;
+  }
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--brand)}
+  .cta{display:flex; align-items:center; gap:16px; flex-wrap:wrap}
+  a.btn{
+    display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+    background:var(--accent); color:#fff; font-weight:600; font-size:15px;
+    padding:15px 30px; border-radius:11px; box-shadow:var(--shadow);
+    transition:transform .05s ease, filter .15s ease;
+  }
+  a.btn:hover{filter:brightness(1.06)}
+  a.btn:active{transform:translateY(1px)}
+  a.btn svg{width:18px;height:18px}
+  .cta .filemeta{font-size:13px; color:var(--muted)}
+  .cta .filemeta code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px}
+
+  /* ---- stat strip ---- */
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; padding:34px 0}
+  @media (max-width:640px){ .stats{grid-template-columns:repeat(2,1fr)} }
+  .stat{background:var(--panel); border:1px solid var(--line); border-radius:13px; padding:18px 16px}
+  .stat .n{font-size:24px; font-weight:750; letter-spacing:-.01em}
+  .stat .l{font-size:12.5px; color:var(--muted); margin-top:3px}
+
+  /* ---- sections ---- */
+  section{padding:38px 0; border-top:1px solid var(--line)}
+  h2{margin:0 0 6px; font-size:21px; letter-spacing:-.01em}
+  h2 .num{color:var(--brand); font-weight:750; margin-right:10px; font-variant-numeric:tabular-nums}
+  section > .wrap > p{color:var(--muted); max-width:66ch}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px}
+  @media (max-width:640px){ .grid2{grid-template-columns:1fr} }
+  .panel{background:var(--panel); border:1px solid var(--line); border-radius:13px; padding:18px 20px}
+  .panel h3{margin:0 0 8px; font-size:14px; letter-spacing:.01em}
+  .panel p{margin:0; font-size:13.5px; color:var(--muted)}
+  dl.fields{margin:18px 0 0; display:grid; grid-template-columns:auto 1fr; gap:10px 20px; font-size:14px}
+  dl.fields dt{font-weight:650}
+  dl.fields dd{margin:0; color:var(--muted)}
+  code.col{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px;
+    background:var(--chip); border:1px solid var(--line); border-radius:6px; padding:1px 6px}
+
+  /* ---- placeholder section ---- */
+  .placeholder{
+    border:1.5px dashed var(--line); border-radius:13px; padding:30px;
+    text-align:center; color:var(--muted); background:color-mix(in srgb,var(--panel) 60%,transparent);
+  }
+  .placeholder .tag{
+    display:inline-block; font-size:11px; font-weight:700; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--brand); border:1px solid var(--brand);
+    border-radius:999px; padding:3px 10px; margin-bottom:12px;
+  }
+
+  footer{padding:34px 0 60px; border-top:1px solid var(--line); color:var(--muted); font-size:12.5px}
+  footer .cite{background:var(--panel); border:1px solid var(--line); border-radius:11px;
+    padding:14px 16px; font-size:12.5px; line-height:1.6; margin-bottom:16px}
+  footer a{color:var(--accent); text-decoration:none}
+  footer a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
-  <main class="card">
-    <h1>ICSI Meeting Files</h1>
-    <p class="sub">Attendees, transcript, and summary for 61 meetings &mdash; base85-encoded CSV.</p>
-    <a class="btn" href="meeting-files.zip" download>Download meeting files</a>
-    <div class="meta">
-      31 files &middot; combined <code>icsi_meetings_b85.csv</code> + 30 batches
+
+<!-- =============== TOP BAR =============== -->
+<header class="bar">
+  <div class="wrap">
+    <a class="brandmark" href="#top">
+      <!-- ICSI emblem: typographic wordmark (not the official trademark) -->
+      <svg class="emblem" viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="2" y="2" width="60" height="60" rx="13" fill="var(--brand)"/>
+        <text x="32" y="41" text-anchor="middle" font-family="Helvetica,Arial,sans-serif"
+              font-size="22" font-weight="700" letter-spacing="1" fill="#fff">ICSI</text>
+      </svg>
+      <span><b>ICSI Meeting Transcripts</b><span>International Computer Science Institute &middot; Berkeley</span></span>
+    </a>
+    <div class="spacer"></div>
+    <a class="jump" href="#about">Source corpus</a>
+    <a class="jump" href="#contents">What&rsquo;s inside</a>
+    <a class="jump" href="#method">Method</a>
+  </div>
+</header>
+
+<a id="top"></a>
+
+<!-- =============== HERO =============== -->
+<div class="hero">
+  <div class="wrap">
+    <span class="kicker">Derived research dataset</span>
+    <h1>ICSI Meeting Transcripts &mdash;<br>subsampled text &amp; summary set</h1>
+    <p class="lede">
+      A compact, paired subsample drawn from the ICSI Meeting Corpus: for each meeting,
+      the attendee roster, the full spoken transcript, and a human-written abstractive
+      summary &mdash; every field base85-encoded in CSV.
+    </p>
+    <div class="badge"><span class="dot"></span> Subsample &mdash; 61 of the corpus&rsquo;s 75 meetings (those with paired summaries)</div>
+    <div class="cta">
+      <a class="btn" href="meeting-files.zip" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/>
+        </svg>
+        Download meeting files
+      </a>
+      <div class="filemeta">
+        <code>meeting-files.zip</code> &middot; 4.3&nbsp;MB &middot; 30 .CSV files
+      </div>
     </div>
-  </main>
+  </div>
+</div>
+
+<!-- =============== STAT STRIP (this subsample) =============== -->
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><div class="n">61</div><div class="l">meetings (text + summary)</div></div>
+    <div class="stat"><div class="n">49</div><div class="l">distinct speakers</div></div>
+    <div class="stat"><div class="n">~725K</div><div class="l">transcript words</div></div>
+    <div class="stat"><div class="n">~28K</div><div class="l">summary words</div></div>
+  </div>
+</div>
+
+<!-- =============== ABOUT THE SOURCE CORPUS =============== -->
+<section id="about">
+  <div class="wrap">
+    <h2><span class="num">01</span>About the source corpus</h2>
+    <p>
+      This dataset is derived from the <b>ICSI Meeting Corpus</b>, recorded at the International
+      Computer Science Institute in Berkeley and published by the Linguistic Data Consortium as
+      <b>ICSI Meeting Transcripts (LDC2004T04)</b>. The original release provides word-level
+      transcripts for roughly 72 hours of English meeting recordings &mdash; about 795,000 words
+      across 75 natural, unscripted staff meetings.
+    </p>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Recordings</h3>
+        <p>75 meetings, 17&ndash;103 minutes each (~1 hour typical), captured with both
+           close-talking and far-field microphones. Transcripts are based primarily on the
+           close-talking channels.</p>
+      </div>
+      <div class="panel">
+        <h3>Participants</h3>
+        <p>53 unique speakers across the full corpus, averaging six per meeting (range 3&ndash;10),
+           including many non-native English speakers of varying fluency.</p>
+      </div>
+      <div class="panel">
+        <h3>Transcription</h3>
+        <p>~795,000 words, ~13,000 unique word forms, in an XML-based meeting-transcript format
+           synchronized to the audio.</p>
+      </div>
+      <div class="panel">
+        <h3>Annotations used here</h3>
+        <p>The summaries come from the corpus&rsquo;s abstractive summarization annotation layer;
+           attendees and demographics from its speaker metadata.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== WHAT'S IN THIS SUBSAMPLE =============== -->
+<section id="contents">
+  <div class="wrap">
+    <h2><span class="num">02</span>What&rsquo;s in this subsample</h2>
+    <p>
+      Each CSV row is one meeting with three fields. Every field is
+      <b>Base85 (RFC&nbsp;1924 / <code class="col">b85</code>) encoded UTF-8</b>
+    </p>
+    <dl class="fields">
+      <dt><code class="col">attendees_b85</code></dt>
+      <dd>Speakers who talk in the meeting, ordered by first utterance, with gender, age,
+          education and language background (e.g. <code class="col">me018 gender=Male age=37 education=PhD lang=English/American/Calif</code>).</dd>
+      <dt><code class="col">meeting_text_b85</code></dt>
+      <dd>The full transcript, reconstructed from the stand-off word/segment annotation and
+          rendered as <code class="col">speaker: utterance</code> lines in time order.</dd>
+      <dt><code class="col">meeting_summary_b85</code></dt>
+      <dd>The human abstractive summary, kept in its four labelled sections:
+          <code class="col">[ABSTRACT] [DECISIONS] [PROBLEMS] [PROGRESS]</code>.</dd>
+    </dl>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Packaging</h3>
+        <p>The download contains  30 batch files of two rows each &mdash; <code class="col">batch_01.csv</code>
+           through <code class="col">batch_30.csv</code> (the last holds the leftover row).</p>
+      </div>
+      <div class="panel">
+        <h3>Decoding</h3>
+        <p>Unzip then in Python: <code class="col">base64.b85decode(cell).decode("utf-8")</code>. Every field
+           is validated to round-trip cleanly back to UTF-8 text.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== HOW WE CREATED THIS SUBSAMPLED DATASET =============== -->
+<!--
+  TODO(author): Fill in this section by hand.
+  Describe how the subsample was created, e.g.:
+    - why 61 of 75 meetings (paired-summary availability), any exclusion criteria
+    - which annotation layers were joined and how (Words -> Segments/DialogueActs -> Summarization)
+    - sampling / filtering decisions, and any preprocessing or normalization applied
+    - the base85 encoding rationale and reproducibility notes / script reference
+  Replace the placeholder block below with the real write-up when ready.
+-->
+<section id="method">
+  <div class="wrap">
+    <h2><span class="num">03</span>How we created this subsampled dataset</h2>
+    <div class="placeholder">
+      <span class="tag">Process</span>
+      <p>We utilize a sequence of python helpers and wrappers. Code included, but not necessary to analyze dataset.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =============== FOOTER =============== -->
+<footer>
+  <div class="wrap">
+    <div class="cite">
+      <b>Source citation.</b> Janin, A., Edwards, J., Ellis, D., Gelbart, D., Morgan, N., Peskin, B.,
+      Pfau, T., Shriberg, E., Stolcke, A., &amp; Wooters, C. (2004).
+      <i>ICSI Meeting Transcripts</i> (LDC2004T04). Linguistic Data Consortium. Released 2004-01-30.
+      Catalog: <a href="https://catalog.ldc.upenn.edu/LDC2004T04">catalog.ldc.upenn.edu/LDC2004T04</a>.
+    </div>
+    This page hosts a derived subsample for research use; refer to the original corpus and its
+    licence for terms of use. ICSI is the International Computer Science Institute, Berkeley.
+    The emblem above is a plain typographic wordmark, not the institute&rsquo;s official logo.
+  </div>
+</footer>
+
 </body>
 </html>
