@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ICSI Meeting Files</title>
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f6f7f9; color: #1b1f24;
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: #0f1216; color: #e6e9ed; }
+  }
+  .card {
+    background: #fff; border: 1px solid #e3e6ea; border-radius: 16px;
+    padding: 40px 44px; max-width: 460px; width: calc(100% - 32px);
+    box-shadow: 0 8px 30px rgba(0,0,0,.06); text-align: center;
+  }
+  @media (prefers-color-scheme: dark) {
+    .card { background: #171b21; border-color: #262c34; box-shadow: 0 8px 30px rgba(0,0,0,.4); }
+  }
+  h1 { margin: 0 0 6px; font-size: 22px; letter-spacing: -.01em; }
+  p.sub { margin: 0 0 28px; color: #6b7280; font-size: 14px; }
+  @media (prefers-color-scheme: dark) { p.sub { color: #9aa4b2; } }
+  a.btn {
+    display: inline-block; text-decoration: none;
+    background: #2f6df6; color: #fff; font-weight: 600; font-size: 15px;
+    padding: 14px 30px; border-radius: 10px; border: none; cursor: pointer;
+    transition: background .15s ease, transform .05s ease;
+  }
+  a.btn:hover { background: #245bd6; }
+  a.btn:active { transform: translateY(1px); }
+  .meta { margin-top: 22px; font-size: 12.5px; color: #9099a3; }
+  .meta code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+</style>
+</head>
+<body>
+  <main class="card">
+    <h1>ICSI Meeting Files</h1>
+    <p class="sub">Attendees, transcript, and summary for 61 meetings &mdash; base85-encoded CSV.</p>
+    <a class="btn" href="meeting-files.zip" download>Download meeting files</a>
+    <div class="meta">
+      31 files &middot; combined <code>icsi_meetings_b85.csv</code> + 30 batches
+    </div>
+  </main>
+</body>
+</html>
