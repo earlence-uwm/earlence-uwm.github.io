@@ -154,7 +154,7 @@
         Download meeting files
       </a>
       <div class="filemeta">
-        <code>meeting-files.zip</code> &middot; 4.1&nbsp;MB &middot; 31 CSV files
+        <code>meeting-files.zip</code> &middot; 4.3&nbsp;MB &middot; 30 .CSV files
       </div>
     </div>
   </div>
@@ -213,9 +213,7 @@
     <h2><span class="num">02</span>What&rsquo;s in this subsample</h2>
     <p>
       Each CSV row is one meeting with three fields. Every field is
-      <b>Base85 (RFC&nbsp;1924 / <code class="col">b85</code>) encoded UTF-8</b>, so the raw text
-      &mdash; which contains newlines, commas and quotes &mdash; stays on a single CSV line and
-      survives round-tripping unchanged.
+      <b>Base85 (RFC&nbsp;1924 / <code class="col">b85</code>) encoded UTF-8</b>
     </p>
     <dl class="fields">
       <dt><code class="col">attendees_b85</code></dt>
@@ -231,13 +229,12 @@
     <div class="grid2">
       <div class="panel">
         <h3>Packaging</h3>
-        <p>The download contains one combined <code class="col">icsi_meetings_b85.csv</code>
-           (61 rows) plus 30 batch files of two rows each &mdash; <code class="col">batch_01.csv</code>
+        <p>The download contains  30 batch files of two rows each &mdash; <code class="col">batch_01.csv</code>
            through <code class="col">batch_30.csv</code> (the last holds the leftover row).</p>
       </div>
       <div class="panel">
         <h3>Decoding</h3>
-        <p>In Python: <code class="col">base64.b85decode(cell).decode("utf-8")</code>. Every field
+        <p>Unzip then in Python: <code class="col">base64.b85decode(cell).decode("utf-8")</code>. Every field
            is validated to round-trip cleanly back to UTF-8 text.</p>
       </div>
     </div>
@@ -245,22 +242,13 @@
 </section>
 
 <!-- =============== HOW WE CREATED THIS SUBSAMPLED DATASET =============== -->
-<!--
-  TODO(author): Fill in this section by hand.
-  Describe how the subsample was created, e.g.:
-    - why 61 of 75 meetings (paired-summary availability), any exclusion criteria
-    - which annotation layers were joined and how (Words -> Segments/DialogueActs -> Summarization)
-    - sampling / filtering decisions, and any preprocessing or normalization applied
-    - the base85 encoding rationale and reproducibility notes / script reference
-  Replace the placeholder block below with the real write-up when ready.
--->
+
 <section id="method">
   <div class="wrap">
     <h2><span class="num">03</span>How we created this subsampled dataset</h2>
     <div class="placeholder">
-      <span class="tag">To be written</span>
-      <p>This section will describe how the subsampled dataset was constructed.<br>
-         Content coming soon.</p>
+      <span class="tag">Process</span>
+      <p>We utilize a sequence of python helpers and wrappers. Code included, but not necessary to analyze dataset.</p>
     </div>
   </div>
 </section>
